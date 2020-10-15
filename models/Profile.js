@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const ProfileSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.type.ObjectId,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
   company: { type: String },
