@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCurrentProfile } from '../../actions/profile';
+import { delAccount, getCurrentProfile } from '../../actions/profile';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
@@ -10,6 +10,7 @@ import Education from './Education';
 
 const Dashboard = ({
   getCurrentProfile,
+  delAccount,
   auth: { user },
   profile: { profile, loading },
 }) => {
@@ -39,12 +40,18 @@ const Dashboard = ({
           </Link>
         </Fragment>
       )}
+      <div class='my-2'>
+        <button class='btn btn-danger' onClick={() => delAccount()}>
+          <i class='fas fa-user-minus'></i> Delete My Account
+        </button>
+      </div>
     </Fragment>
   );
 };
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
+  delAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };
@@ -54,4 +61,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, delAccount })(
+  Dashboard,
+);
