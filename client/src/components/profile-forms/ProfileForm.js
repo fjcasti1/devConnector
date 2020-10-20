@@ -1,22 +1,25 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createProfile } from '../../actions/profile';
 
-const CreateProfile = (props) => {
-  const [formData, setFormData] = useState({
-    company: '',
-    website: '',
-    location: '',
-    status: '',
-    skills: '',
-    githubusername: '',
-    bio: '',
-    twitter: '',
-    facebook: '',
-    linkedin: '',
-    youtube: '',
-    instagram: '',
-  });
+const initialState = {
+  company: '',
+  website: '',
+  location: '',
+  status: '',
+  skills: '',
+  githubusername: '',
+  bio: '',
+  twitter: '',
+  facebook: '',
+  linkedin: '',
+  youtube: '',
+  instagram: '',
+};
+
+const ProfileForm = ({ history, createProfile }) => {
+  const [formData, setFormData] = useState(initialState);
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
@@ -35,8 +38,14 @@ const CreateProfile = (props) => {
     instagram,
   } = formData;
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: [e.target.value] });
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    createProfile(formData, history);
+  };
 
   return (
     <Fragment>
@@ -46,10 +55,10 @@ const CreateProfile = (props) => {
         profile stand out
       </p>
       <small>* = required field</small>
-      <form className='form'>
+      <form className='form' onSubmit={onSubmit}>
         <div className='form-group'>
-          <select name='status' value={status} onChange={(e) => onChange(e)}>
-            <option value='0'>* Select Professional Status</option>
+          <select name='status' value={status} onChange={onChange}>
+            <option>* Select Professional Status</option>
             <option value='Developer'>Developer</option>
             <option value='Junior Developer'>Junior Developer</option>
             <option value='Senior Developer'>Senior Developer</option>
@@ -69,7 +78,7 @@ const CreateProfile = (props) => {
             placeholder='Company'
             name='company'
             value={company}
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
           />
           <small className='form-text'>
             Could be your own company or one you work for
@@ -81,7 +90,7 @@ const CreateProfile = (props) => {
             placeholder='Website'
             name='website'
             value={website}
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
           />
           <small className='form-text'>Could be your own or a company website</small>
         </div>
@@ -91,7 +100,7 @@ const CreateProfile = (props) => {
             placeholder='Location'
             name='location'
             value={location}
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
           />
           <small className='form-text'>
             City & state suggested (eg. Boston, MA)
@@ -103,7 +112,7 @@ const CreateProfile = (props) => {
             placeholder='* Skills'
             name='skills'
             value={skills}
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
           />
           <small className='form-text'>
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
@@ -115,7 +124,7 @@ const CreateProfile = (props) => {
             placeholder='Github Username'
             name='githubusername'
             value={githubusername}
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
           />
           <small className='form-text'>
             If you want your latest repos and a Github link, include your username
@@ -126,7 +135,7 @@ const CreateProfile = (props) => {
             placeholder='A short bio of yourself'
             name='bio'
             value={bio}
-            onChange={(e) => onChange(e)}
+            onChange={onChange}
           ></textarea>
           <small className='form-text'>Tell us a little about yourself</small>
         </div>
@@ -150,7 +159,7 @@ const CreateProfile = (props) => {
                 placeholder='Twitter URL'
                 name='twitter'
                 value={twitter}
-                onChange={(e) => onChange(e)}
+                onChange={onChange}
               />
             </div>
 
@@ -161,7 +170,7 @@ const CreateProfile = (props) => {
                 placeholder='Facebook URL'
                 name='facebook'
                 value={facebook}
-                onChange={(e) => onChange(e)}
+                onChange={onChange}
               />
             </div>
 
@@ -172,7 +181,7 @@ const CreateProfile = (props) => {
                 placeholder='YouTube URL'
                 name='youtube'
                 value={youtube}
-                onChange={(e) => onChange(e)}
+                onChange={onChange}
               />
             </div>
 
@@ -183,7 +192,7 @@ const CreateProfile = (props) => {
                 placeholder='Linkedin URL'
                 name='linkedin'
                 value={linkedin}
-                onChange={(e) => onChange(e)}
+                onChange={onChange}
               />
             </div>
 
@@ -194,7 +203,7 @@ const CreateProfile = (props) => {
                 placeholder='Instagram URL'
                 name='instagram'
                 value={instagram}
-                onChange={(e) => onChange(e)}
+                onChange={onChange}
               />
             </div>
           </Fragment>
@@ -208,6 +217,8 @@ const CreateProfile = (props) => {
   );
 };
 
-CreateProfile.propTypes = {};
+ProfileForm.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+};
 
-export default connect()(CreateProfile);
+export default connect(null, { createProfile })(ProfileForm);

@@ -72,7 +72,9 @@ router.post(
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
     if (skills) {
-      profileFields.skills = skills.split(',').map((skill) => skill.trim());
+      Array.isArray(skills)
+        ? skills
+        : (profileFields.skills = skills.split(',').map((skill) => skill.trim()));
     }
 
     // Build social object inside the profile object
@@ -105,7 +107,6 @@ router.post(
       console.error(err.message);
       res.status(500).send('Server Error');
     }
-    res.send('Hello');
   },
 );
 
