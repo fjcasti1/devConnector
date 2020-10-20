@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile } from '../../actions/profile';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
+import { Link } from 'react-router-dom';
 
 const initialState = {
   company: '',
@@ -18,10 +19,32 @@ const initialState = {
   instagram: '',
 };
 
-const ProfileForm = ({ history, createProfile }) => {
+const ProfileForm = ({
+  profile: { profile, loading },
+  history,
+  createProfile,
+  getCurrentProfile,
+}) => {
   const [formData, setFormData] = useState(initialState);
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
+
+  useEffect(() => {
+    if (!profile) getCurrentProfile();
+    // eslint-disable-next-line
+    if (!loading && profile) {
+      const profileData = { ...initialState };
+      for (const key in profile) {
+        if (key in profileData) profileData[key] = profile[key];
+      }
+      for (const key in profile.social) {
+        if (key in profileData) profileData[key] = profile.social[key];
+      }
+      if (Array.isArray(profileData.skills))
+        profileData.skills = profileData.skills.join(', ');
+      setFormData(profileData);
+    }
+  }, [loading, getCurrentProfile, profile]);
 
   const {
     company,
@@ -44,7 +67,7 @@ const ProfileForm = ({ history, createProfile }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, history);
+    createProfile(formData, history, profile ? true : false);
   };
 
   return (
@@ -209,9 +232,9 @@ const ProfileForm = ({ history, createProfile }) => {
           </Fragment>
         )}
         <input type='submit' className='btn btn-primary my-1' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <Link to='/dashboard' className='btn btn-light my-1' href='dashboard.html'>
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );
@@ -219,6 +242,14 @@ const ProfileForm = ({ history, createProfile }) => {
 
 ProfileForm.propTypes = {
   createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createProfile })(ProfileForm);
+const mapStateToProps = (state) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+  ProfileForm,
+);
