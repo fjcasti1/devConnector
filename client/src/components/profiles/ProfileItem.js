@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -36,6 +36,9 @@ const ProfileItem = ({
     </div>
   );
 };
-ProfileItem.propTypes = {};
+
+ProfileItem.propTypes = {
+  profile: PropTypes.object.isRequired,
+};
 
 export default ProfileItem;
