@@ -11,7 +11,6 @@ const ProfileItem = ({
     skills,
   },
 }) => {
-  console.log(typeof skills);
   return (
     <div className='profile bg-light'>
       <img className='round-img' src={avatar} alt='' />
