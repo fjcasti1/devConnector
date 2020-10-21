@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import { getProfileById } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
+import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
+// import ProfileExperience from './ProfileExperience';
+// import ProfileEducation from './ProfileEducation';
+// import ProfileRepos from './ProfileRepos';
 
 const Profile = ({ match, getProfileById, profile: { profile, loading }, auth }) => {
   useEffect(() => {
@@ -26,6 +31,10 @@ const Profile = ({ match, getProfileById, profile: { profile, loading }, auth })
                 Edit Profile
               </Link>
             )}
+          <div class='profile-grid my-1'>
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+          </div>
         </Fragment>
       )}
     </Fragment>
