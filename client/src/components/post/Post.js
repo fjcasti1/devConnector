@@ -8,12 +8,9 @@ import PostItem from '../posts/PostItem';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 
-// const Post = ({ match, getPost, post: { text, name, avatar, user, date } }) => {
 const Post = ({ match, getPost, post: { post, loading } }) => {
   useEffect(() => {
     getPost(match.params.id);
-    // console.log(typeof post);
-    // console.log(post);
   }, [getPost, match]);
 
   return loading || post === null ? (
