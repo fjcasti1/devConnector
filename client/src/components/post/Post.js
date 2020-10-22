@@ -21,7 +21,7 @@ const Post = ({ match, getPost, post: { post, loading } }) => {
         Back To Posts
       </Link>
       <PostItem post={post} showActions={false} />
-      <CommentForm />
+      <CommentForm postID={match.params.id} />
 
       <div className='comments'>
         {/* Repeat Array */}
