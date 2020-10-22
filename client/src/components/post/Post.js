@@ -24,8 +24,9 @@ const Post = ({ match, getPost, post: { post, loading } }) => {
       <CommentForm postID={match.params.id} />
 
       <div className='comments'>
-        {/* Repeat Array */}
-        <CommentItem />
+        {post.comments.map((comment, index) => (
+          <CommentItem key={index} comment={comment} postID={post._id} />
+        ))}
       </div>
     </Fragment>
   );
