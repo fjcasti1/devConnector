@@ -5,7 +5,6 @@ const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 
 // @route     GET api/auth
 // @desc      Get an authorized user

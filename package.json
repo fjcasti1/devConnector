@@ -22,7 +22,7 @@
   "homepage": "https://github.com/fjcasti1/devConnector#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "config": "^3.3.2",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
     "gravatar": "^1.8.1",
