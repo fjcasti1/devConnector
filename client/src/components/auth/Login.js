@@ -51,7 +51,7 @@ const Login = ({ login, isAuthenticated }) => {
           />
         </div>
         <input type='submit' className='btn btn-primary' value='LogIn' />
-        <a href='auth/google' className='btn btn-primary'>
+        <a href='http://localhost:5000/auth/google' className='btn btn-primary'>
           Sign in with Google
         </a>
       </form>
