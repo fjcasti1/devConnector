@@ -5,7 +5,11 @@ const UserGoogleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
@@ -14,7 +18,7 @@ const UserGoogleSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  avatar: {
+  image: {
     type: String,
   },
   date: {
