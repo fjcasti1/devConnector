@@ -5,7 +5,10 @@ const router = express.Router();
 // @route     GET auth/google
 // @desc      Authenticate with Google
 // @access    Public
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
+);
 
 // @route     GET auth/google/callback
 // @desc      Google auth callback
