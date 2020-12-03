@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const ProfileSchema = new mongoose.Schema({
+const ProfileSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
@@ -44,4 +44,6 @@ const ProfileSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
-module.exports = Profile = mongoose.model('profile', ProfileSchema);
+const Profile = mongoose.model('profile', ProfileSchema);
+
+export default Profile;

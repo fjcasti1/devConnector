@@ -1,10 +1,11 @@
-const express = require('express');
+import express from 'express';
+import User from '../../models/User.js';
+import { check, validationResult } from 'express-validator';
+import gravatar from 'gravatar';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const User = require('../../models/User');
-const gravatar = require('gravatar');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 // @route     POST api/users
 // @desc      Register user
@@ -79,4 +80,4 @@ router.post(
   },
 );
 
-module.exports = router;
+export default router;

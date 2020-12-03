@@ -1,15 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const UserGoogleSchema = new mongoose.Schema({
-  googleId: {
+const User2Schema = mongoose.Schema({
+  userId: {
     type: String,
     required: true,
   },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
+  name: {
     type: String,
     required: true,
   },
@@ -27,4 +23,6 @@ const UserGoogleSchema = new mongoose.Schema({
   },
 });
 
-module.exports = UserGoogle = mongoose.model('userGoogle', UserGoogleSchema);
+const User2 = mongoose.model('User2', User2Schema);
+
+export default User2;
