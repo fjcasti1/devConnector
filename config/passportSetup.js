@@ -23,7 +23,7 @@ passport.use(
       };
 
       try {
-        let user = await User2.findOne({ userId: profile.id });
+        let user = await User2.findOne({ email: newUser.email });
         if (!user) {
           user = await User2.create(newUser);
         }
@@ -52,7 +52,7 @@ passport.use(
       };
 
       try {
-        let user = await User2.findOne({ userId: profile.id });
+        let user = await User2.findOne({ email: newUser.email });
         if (!user) {
           user = await User2.create(newUser);
         }
