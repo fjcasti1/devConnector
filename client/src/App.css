@@ -46,8 +46,7 @@ img {
 
 .login-btn {
   width: 90% !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  margin: 0.5rem 0 !important;
 }
 
 .card {
