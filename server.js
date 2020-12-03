@@ -1,10 +1,16 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const path = require('path');
-const morgan = require('morgan');
-const passport = require('passport');
-const session = require('express-session');
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import path from 'path';
+import morgan from 'morgan';
+import passport from 'passport';
+import session from 'express-session';
+import authRoutes from './routes/api/auth.js';
+import usersRoutes from './routes/api/users.js';
+import profileRoutes from './routes/api/profile.js';
+import postsRoutes from './routes/api/posts.js';
+import thirdPartyAuthRoutes from './routes/thirdPartyAuth.js';
+import User2 from './models/User2.js';
 
 dotenv.config();
 
@@ -12,7 +18,16 @@ dotenv.config();
 const app = express();
 
 // Passport config
-require('./config/passport')(passport);
+// require('./config/passport')(passport);
+import { googleStrategy, githubStrategy } from './config/passportStrategies.js';
+passport.use('myGoogleStrategy', googleStrategy);
+passport.use('myGitHubStrategy', githubStrategy);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+passport.deserializeUser((userId, done) => {
+  User2.findById(userId, (err, user) => done(err, user));
+});
 
 // Connect to DB
 connectDB();
@@ -39,11 +54,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Define Routes
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/profile', require('./routes/api/profile'));
-app.use('/api/posts', require('./routes/api/posts'));
-app.use('/auth', require('./routes/auth'));
+app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/posts', postsRoutes);
+app.use('/auth', thirdPartyAuthRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
