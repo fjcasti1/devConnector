@@ -8,7 +8,7 @@ const router = express.Router();
 // @access    Public
 router.get(
   '/google',
-  passport.authenticate('myGoogleStrategy', { scope: ['profile', 'email'] }),
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 
 // @route     GET auth/google/callback
@@ -16,7 +16,7 @@ router.get(
 // @access    Public
 router.get(
   '/google/callback',
-  passport.authenticate('myGoogleStrategy', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     res.redirect('/register');
   },
@@ -27,7 +27,7 @@ router.get(
 // @access    Public
 router.get(
   '/github',
-  passport.authenticate('myGitHubStrategy', { scope: ['profile', 'email'] }),
+  passport.authenticate('github', { scope: ['profile', 'email'] }),
 );
 
 // @route     GET auth/github/callback
@@ -35,7 +35,7 @@ router.get(
 // @access    Public
 router.get(
   '/github/callback',
-  passport.authenticate('myGitHubStrategy', { failureRedirect: '/' }),
+  passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
     res.redirect('/register');
   },

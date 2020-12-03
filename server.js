@@ -10,24 +10,13 @@ import usersRoutes from './routes/api/users.js';
 import profileRoutes from './routes/api/profile.js';
 import postsRoutes from './routes/api/posts.js';
 import thirdPartyAuthRoutes from './routes/thirdPartyAuth.js';
-import User2 from './models/User2.js';
+// Passport config
+import './config/passportSetup.js';
 
 dotenv.config();
 
 // Initialize express server
 const app = express();
-
-// Passport config
-// require('./config/passport')(passport);
-import { googleStrategy, githubStrategy } from './config/passportStrategies.js';
-passport.use('myGoogleStrategy', googleStrategy);
-passport.use('myGitHubStrategy', githubStrategy);
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-passport.deserializeUser((userId, done) => {
-  User2.findById(userId, (err, user) => done(err, user));
-});
 
 // Connect to DB
 connectDB();
