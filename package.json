@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Social Network for Developers",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
@@ -33,6 +34,7 @@
     "mongoose": "^5.10.9",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
+    "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "request": "^2.88.2"
   },
