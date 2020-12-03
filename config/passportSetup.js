@@ -6,6 +6,7 @@ import User2 from '../models/User2.js';
 
 dotenv.config();
 
+// Google Strategy
 passport.use(
   new GoogleStrategy(
     {
@@ -34,6 +35,7 @@ passport.use(
   ),
 );
 
+// GitHub Strategy
 passport.use(
   new GitHubStrategy(
     {
@@ -62,6 +64,7 @@ passport.use(
   ),
 );
 
+// Serializer & Deserializer to allow sessions
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
