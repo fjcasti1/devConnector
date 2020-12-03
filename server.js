@@ -4,7 +4,7 @@ import connectDB from './config/db.js';
 import path from 'path';
 import morgan from 'morgan';
 import passport from 'passport';
-import session from 'express-session';
+import cookieSession from 'cookie-session';
 import authRoutes from './routes/api/auth.js';
 import usersRoutes from './routes/api/users.js';
 import profileRoutes from './routes/api/profile.js';
@@ -31,10 +31,9 @@ app.use(express.json({ extended: false }));
 
 // Sessions Middleware
 app.use(
-  session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
+  cookieSession({
+    keys: process.env.COOKIE_KEY,
+    maxAge: 1000 * 60, // TODO: extend time!!
   }),
 );
 
