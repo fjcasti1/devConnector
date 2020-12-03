@@ -45,7 +45,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const newUser = {
-        userId: profile.id,
         name: profile.displayName,
         email: profile.emails[0].value,
         image: profile.photos[0].value,
