@@ -68,6 +68,6 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((userId, done) => {
-  User2.findById(userId, (err, user) => done(err, user));
+passport.deserializeUser(async (id, done) => {
+  await User2.findById(id, (err, user) => done(err, user));
 });
