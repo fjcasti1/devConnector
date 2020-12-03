@@ -14,7 +14,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/auth/google/callback',
     },
-    async (accessToken, refreshToken, profile, cb) => {
+    async (accessToken, refreshToken, profile, done) => {
       const newUser = {
         userId: profile.id,
         name: profile.displayName,
@@ -27,7 +27,7 @@ passport.use(
         if (!user) {
           user = await User2.create(newUser);
         }
-        cb(null, user);
+        done(null, user);
       } catch (error) {
         console.error(error);
       }
@@ -43,7 +43,7 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: '/auth/github/callback',
     },
-    async (accessToken, refreshToken, profile, cb) => {
+    async (accessToken, refreshToken, profile, done) => {
       const newUser = {
         userId: profile.id,
         name: profile.displayName,
@@ -56,7 +56,7 @@ passport.use(
         if (!user) {
           user = await User2.create(newUser);
         }
-        cb(null, user);
+        done(null, user);
       } catch (error) {
         console.error(error);
       }
