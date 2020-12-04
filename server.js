@@ -3,15 +3,19 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import path from 'path';
 import morgan from 'morgan';
-import passport from 'passport';
-import cookieSession from 'cookie-session';
 import authRoutes from './routes/api2/auth.js';
 import usersRoutes from './routes/api2/users.js';
 import profileRoutes from './routes/api2/profile.js';
 import postsRoutes from './routes/api2/posts.js';
 import thirdPartyAuthRoutes from './routes/thirdPartyAuth.js';
+import passport from 'passport';
+import mongoose from 'mongoose';
+import connectMongo from 'connect-mongo';
+import session from 'express-session';
 // Passport config
 import './config/passportSetup.js';
+
+const MongoStore = connectMongo(session);
 
 dotenv.config();
 
@@ -31,9 +35,11 @@ app.use(express.json({ extended: false }));
 
 // Sessions Middleware
 app.use(
-  cookieSession({
-    keys: process.env.COOKIE_KEY,
-    maxAge: 1000 * 60, // TODO: extend time!!
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }),
 );
 
