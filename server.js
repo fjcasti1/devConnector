@@ -5,10 +5,10 @@ import path from 'path';
 import morgan from 'morgan';
 import passport from 'passport';
 import cookieSession from 'cookie-session';
-import authRoutes from './routes/api/auth.js';
-import usersRoutes from './routes/api/users.js';
-import profileRoutes from './routes/api/profile.js';
-import postsRoutes from './routes/api/posts.js';
+import authRoutes from './routes/api2/auth.js';
+import usersRoutes from './routes/api2/users.js';
+import profileRoutes from './routes/api2/profile.js';
+import postsRoutes from './routes/api2/posts.js';
 import thirdPartyAuthRoutes from './routes/thirdPartyAuth.js';
 // Passport config
 import './config/passportSetup.js';
@@ -44,7 +44,7 @@ app.use(passport.session());
 // Define Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
-app.use('/api/profile', profileRoutes);
+app.use('/api/profiles', profileRoutes);
 app.use('/api/posts', postsRoutes);
 app.use('/auth', thirdPartyAuthRoutes);
 
