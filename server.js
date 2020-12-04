@@ -7,7 +7,6 @@ import authRoutes from './routes/api2/auth.js';
 import usersRoutes from './routes/api2/users.js';
 import profileRoutes from './routes/api2/profile.js';
 import postsRoutes from './routes/api2/posts.js';
-import thirdPartyAuthRoutes from './routes/thirdPartyAuth.js';
 import passport from 'passport';
 import mongoose from 'mongoose';
 import connectMongo from 'connect-mongo';
@@ -48,11 +47,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Define Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', usersRoutes);
-app.use('/api/profiles', profileRoutes);
-app.use('/api/posts', postsRoutes);
-app.use('/auth', thirdPartyAuthRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', usersRoutes);
+app.use('/profiles', profileRoutes);
+app.use('/posts', postsRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
