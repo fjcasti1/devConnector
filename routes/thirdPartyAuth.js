@@ -43,6 +43,7 @@ router.get(
 
 router.get('/logout', (req, res) => {
   req.logout();
+  res.redirect('/login');
 });
 
 export default router;
