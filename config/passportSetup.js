@@ -2,7 +2,7 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import GoogleStrategy from 'passport-google-oauth20';
 import GitHubStrategy from 'passport-github2';
-import User2 from '../models/User2.js';
+import User from '../models/User.js';
 
 dotenv.config();
 
@@ -23,9 +23,9 @@ passport.use(
       };
 
       try {
-        let user = await User2.findOne({ email: newUser.email });
+        let user = await User.findOne({ email: newUser.email });
         if (!user) {
-          user = await User2.create(newUser);
+          user = await User.create(newUser);
         }
         done(null, user);
       } catch (error) {
@@ -51,9 +51,9 @@ passport.use(
       };
 
       try {
-        let user = await User2.findOne({ email: newUser.email });
+        let user = await User.findOne({ email: newUser.email });
         if (!user) {
-          user = await User2.create(newUser);
+          user = await User.create(newUser);
         }
         done(null, user);
       } catch (error) {
@@ -69,5 +69,5 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  await User2.findById(id, (err, user) => done(err, user));
+  await User.findById(id, (err, user) => done(err, user));
 });
