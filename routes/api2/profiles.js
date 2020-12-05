@@ -124,13 +124,13 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route     GET profiles/:user_id
+// @route     GET profiles/:userId
 // @desc      Get profile by user ID
 // @access    Public
-router.get('/:user_id', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.params.user_id,
+      user: req.params.userId,
     }).populate('user', ['name', 'image']);
 
     if (!profile) return res.status(400).json({ msg: 'Profile not found' });
@@ -183,17 +183,17 @@ router.post(
   },
 );
 
-// @route     DELETE profiles/me/experience/:exp_id
+// @route     DELETE profiles/me/experience/:expId
 // @desc      Delete experience from profile
 // @access    Private
-router.delete('/me/experience/:exp_id', auth, async (req, res) => {
+router.delete('/me/experience/:expId', auth, async (req, res) => {
   try {
     // Get profile profile
     const profile = await Profile.findOne({ user: req.user.id });
     // Get the remove index
     const removeIndex = profile.experience
       .map((item) => item.id)
-      .indexOf(req.params.exp_id);
+      .indexOf(req.params.expId);
 
     if (removeIndex === -1)
       return res.status(400).json({ msg: 'Experience item not found' });
@@ -254,17 +254,17 @@ router.post(
   },
 );
 
-// @route     DELETE profiles/me/education/:edu_id
+// @route     DELETE profiles/me/education/:eduId
 // @desc      Delete education from profile
 // @access    Private
-router.delete('/me/education/:edu_id', auth, async (req, res) => {
+router.delete('/me/education/:eduId', auth, async (req, res) => {
   try {
     // Get profile profile
     const profile = await Profile.findOne({ user: req.user.id });
     // Get the remove index
     const removeIndex = profile.education
       .map((item) => item.id)
-      .indexOf(req.params.edu_id);
+      .indexOf(req.params.eduId);
 
     if (removeIndex === -1)
       return res.status(400).json({ msg: 'Education item not found' });
