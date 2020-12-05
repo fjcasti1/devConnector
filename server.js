@@ -5,7 +5,7 @@ import path from 'path';
 import morgan from 'morgan';
 import authRoutes from './routes/api2/auth.js';
 import usersRoutes from './routes/api2/users.js';
-import profileRoutes from './routes/api2/profile.js';
+import profileRoutes from './routes/api2/profiles.js';
 import postsRoutes from './routes/api2/posts.js';
 import passport from 'passport';
 import mongoose from 'mongoose';
