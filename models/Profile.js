@@ -41,7 +41,7 @@ const ProfileSchema = mongoose.Schema({
     linedin: { type: String },
     instagram: { type: String },
   },
-  date: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Profile = mongoose.model('profile', ProfileSchema);
