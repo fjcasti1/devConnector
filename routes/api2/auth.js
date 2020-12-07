@@ -1,7 +1,20 @@
 import express from 'express';
 import passport from 'passport';
+import auth from '../../middleware/auth2.js';
 
 const router = express.Router();
+
+// @route     GET auth/user
+// @desc      Get authenticated user
+// @access    Public
+router.get('/user', auth, async (req, res) => {
+  try {
+    res.send(req.user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // @route     GET auth/google
 // @desc      Authenticate with Google
@@ -16,9 +29,9 @@ router.get(
 // @access    Public
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
+  passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    res.redirect('/register');
+    res.redirect('/profiles');
   },
 );
 
