@@ -4,6 +4,8 @@ import auth from '../../middleware/auth2.js';
 
 const router = express.Router();
 
+const REDIRECT = '/login';
+
 // @route     GET auth/user
 // @desc      Get authenticated user
 // @access    Public
@@ -29,9 +31,9 @@ router.get(
 // @access    Public
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/login');
+    res.redirect(REDIRECT);
   },
 );
 
@@ -50,7 +52,7 @@ router.get(
   '/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/register');
+    res.redirect(REDIRECT);
   },
 );
 
