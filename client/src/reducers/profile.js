@@ -1,6 +1,5 @@
 import {
-  PROFILE_REQUEST,
-  PROFILE_FAIL,
+  GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
   GET_PROFILES_SUCCESS,
   CREATE_PROFILE,
@@ -8,24 +7,36 @@ import {
   CLEAR_PROFILE,
   GET_REPOS_REQUEST,
   GET_REPOS_SUCCESS,
+  PROFILE_FAIL,
 } from '../actions/types';
 
 const initialState = {
   profile: null,
   profiles: [],
   repos: [],
-  loading: false,
+  loadingProfile: true,
+  loadingProfiles: true,
+  loadingRepos: true,
   error: {},
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case PROFILE_REQUEST:
+    case GET_PROFILE_REQUEST:
+      return {
+        ...state,
+        loadingProfile: true,
+      };
+    // case GET_PROFILES_REQUEST:
+    //   return {
+    //     ...state,
+    //     loadingProfiles: true,
+    //   };
     case GET_REPOS_REQUEST:
       return {
         ...state,
-        loading: true,
+        loadingRepos: true,
       };
     case GET_PROFILE_SUCCESS:
     case CREATE_PROFILE:
@@ -33,36 +44,36 @@ export default function (state = initialState, action) {
       return {
         ...state,
         profile: payload,
-        loading: false,
+        loadingProfile: false,
         error: {},
       };
     case GET_PROFILES_SUCCESS:
       return {
         ...state,
         profiles: payload,
-        loading: false,
+        loadingProfiles: false,
         error: {},
       };
     case GET_REPOS_SUCCESS:
       return {
         ...state,
         repos: payload,
-        loading: false,
+        loadingRepos: false,
         error: {},
-      };
-    case PROFILE_FAIL:
-      return {
-        ...state,
-        profile: null,
-        loading: false,
-        error: payload,
       };
     case CLEAR_PROFILE:
       return {
         ...state,
         profile: null,
         repos: [],
-        loading: false,
+      };
+    case PROFILE_FAIL:
+      return {
+        ...state,
+        profile: null,
+        loadingProfile: false,
+        loadingProfiles: false,
+        error: payload,
       };
     default:
       return state;

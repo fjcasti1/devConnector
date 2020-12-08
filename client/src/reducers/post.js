@@ -1,6 +1,7 @@
 import {
-  POST_REQUEST,
+  GET_POST_REQUEST,
   POST_FAIL,
+  CLEAR_POST,
   GET_POSTS_SUCCESS,
   GET_POST_SUCCESS,
   UPDATE_LIKES_SUCCESS,
@@ -11,40 +12,34 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  posts: [],
   post: null,
-  loading: false,
+  posts: [],
+  loadingPost: true,
+  loadingPosts: true,
   error: {},
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case POST_REQUEST:
+    case GET_POST_REQUEST:
       return {
         ...state,
-        loading: true,
-      };
-    case GET_POSTS_SUCCESS:
-      return {
-        ...state,
-        posts: payload,
-        loading: false,
-        error: {},
+        loadingPost: true,
       };
     case GET_POST_SUCCESS:
       return {
         ...state,
         post: payload,
-        loading: false,
+        loadingPost: false,
         error: {},
       };
-    case POST_FAIL:
+    case GET_POSTS_SUCCESS:
       return {
         ...state,
-        error: payload,
-        post: null,
-        loading: false,
+        posts: payload,
+        loadingPosts: false,
+        error: {},
       };
     case UPDATE_LIKES_SUCCESS:
       return {
@@ -90,6 +85,20 @@ export default function (state = initialState, action) {
         },
         loading: false,
         error: {},
+      };
+    case CLEAR_POST:
+      return {
+        ...state,
+        post: null,
+        error: {},
+      };
+    case POST_FAIL:
+      return {
+        ...state,
+        error: payload,
+        post: null,
+        loadingPost: false,
+        loadingPosts: false,
       };
     default:
       return state;
