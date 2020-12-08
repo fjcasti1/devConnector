@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { removeComment } from '../../actions/post';
 
 const CommentItem = ({
-  comment: { _id, user, text, name, avatar, date },
+  comment: { _id, user, text, name, image, date },
   postID,
   auth,
   removeComment,
@@ -15,7 +15,7 @@ const CommentItem = ({
     <div className='post bg-white p-1 my-1'>
       <div>
         <Link to={`/profile/${user}`}>
-          <img className='round-img' src={avatar} alt='' />
+          <img className='round-img' src={image} alt='' />
           <h4>{name}</h4>
         </Link>
       </div>

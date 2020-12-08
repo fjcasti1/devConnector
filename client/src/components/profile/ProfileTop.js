@@ -8,13 +8,13 @@ const ProfileTop = ({
     location,
     website,
     social,
-    user: { name, avatar },
+    user: { name, image },
   },
 }) => {
   return (
     <Fragment>
       <div className='profile-top bg-primary p-2'>
-        <img className='round-img my-1' src={avatar} alt='' />
+        <img className='round-img my-1' src={image} alt='' />
         <h1 className='large'>{name}</h1>
         <p className='lead'>
           {status} {company && <span>at {company}</span>}
