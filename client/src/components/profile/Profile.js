@@ -11,8 +11,10 @@ import ProfileRepos from './ProfileRepos';
 
 const Profile = ({ match }) => {
   const dispatch = useDispatch();
-  const { profile, loading } = useSelector((state) => state.profile);
   const auth = useSelector((state) => state.auth);
+  const { profile, loadingProfile, loadingRepos } = useSelector(
+    (state) => state.profile,
+  );
 
   useEffect(() => {
     dispatch(getProfileById(match.params.id));
@@ -20,7 +22,7 @@ const Profile = ({ match }) => {
 
   return (
     <Fragment>
-      {profile == null || loading ? (
+      {profile == null || loadingProfile ? (
         <Spinner />
       ) : (
         <Fragment>
@@ -40,7 +42,10 @@ const Profile = ({ match }) => {
             <ProfileExperience profile={profile} />
             <ProfileEducation profile={profile} />
             {profile.githubusername && (
-              <ProfileRepos username={profile.githubusername} />
+              <ProfileRepos
+                username={profile.githubusername}
+                loading={loadingRepos}
+              />
             )}
           </div>
         </Fragment>
