@@ -26,9 +26,10 @@ export const loadUser = () => async (dispatch) => {
 export const logout = (history) => async (dispatch) => {
   dispatch({ type: LOGOUT_REQUEST });
   try {
-    await axios.get('/auth/logout');
     dispatch({ type: CLEAR_PROFILE });
+    await axios.get('/auth/logout');
     dispatch({ type: LOGOUT_SUCCESS });
+    history.push('/login');
   } catch (error) {
     console.error(error);
   }

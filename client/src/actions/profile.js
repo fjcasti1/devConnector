@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import {
-  PROFILE_REQUEST,
+  // PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
   GET_PROFILES_SUCCESS,
   GET_REPOS_SUCCESS,
@@ -10,11 +10,13 @@ import {
   CLEAR_PROFILE,
   DELETE_ACCOUNT,
   UPDATE_PROFILE_SUCCESS,
+  GET_PROFILE_REQUEST,
+  GET_REPOS_REQUEST,
 } from './types';
 
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
-  dispatch({ type: PROFILE_REQUEST });
+  dispatch({ type: GET_PROFILE_REQUEST });
   try {
     const res = await axios.get('/profiles/me');
 
@@ -32,7 +34,6 @@ export const getCurrentProfile = () => async (dispatch) => {
 
 // Get all profiles
 export const getProfiles = () => async (dispatch) => {
-  dispatch({ type: PROFILE_REQUEST });
   try {
     const res = await axios.get('/profiles');
 
@@ -50,7 +51,7 @@ export const getProfiles = () => async (dispatch) => {
 
 // Get profile by user ID
 export const getProfileById = (userId) => async (dispatch) => {
-  dispatch({ type: PROFILE_REQUEST });
+  dispatch({ type: GET_PROFILE_REQUEST });
   try {
     const res = await axios.get(`/profiles/${userId}`);
 
@@ -68,6 +69,7 @@ export const getProfileById = (userId) => async (dispatch) => {
 
 // Get Github repos
 export const getGithubRepos = (username) => async (dispatch) => {
+  dispatch({ type: GET_REPOS_REQUEST });
   try {
     const res = await axios.get(`/profiles/github/${username}`);
 
@@ -87,7 +89,7 @@ export const getGithubRepos = (username) => async (dispatch) => {
 export const createProfile = (formData, history, edit = false) => async (
   dispatch,
 ) => {
-  dispatch({ type: PROFILE_REQUEST });
+  // dispatch({ type: PROFILE_REQUEST });
   try {
     const config = {
       headers: { 'Content-Type': 'application/json' },
@@ -119,7 +121,7 @@ export const createProfile = (formData, history, edit = false) => async (
 
 // Add Experience
 export const addExperience = (formData, history) => async (dispatch) => {
-  dispatch({ type: PROFILE_REQUEST });
+  // dispatch({ type: PROFILE_REQUEST });
   try {
     const config = {
       headers: {
@@ -151,7 +153,7 @@ export const addExperience = (formData, history) => async (dispatch) => {
 
 // Add Education
 export const addEducation = (formData, history) => async (dispatch) => {
-  dispatch({ type: PROFILE_REQUEST });
+  // dispatch({ type: PROFILE_REQUEST });
   try {
     const config = {
       headers: {
@@ -183,7 +185,7 @@ export const addEducation = (formData, history) => async (dispatch) => {
 
 // Delete Experience
 export const delExperience = (expID) => async (dispatch) => {
-  dispatch({ type: PROFILE_REQUEST });
+  // dispatch({ type: PROFILE_REQUEST });
   try {
     const res = await axios.delete(`/profiles/me/experience/${expID}`);
 
@@ -202,7 +204,7 @@ export const delExperience = (expID) => async (dispatch) => {
 
 // Delete Education
 export const delEducation = (eduID) => async (dispatch) => {
-  dispatch({ type: PROFILE_REQUEST });
+  // dispatch({ type: PROFILE_REQUEST });
   try {
     const res = await axios.delete(`/profiles/me/education/${eduID}`);
 
@@ -235,4 +237,8 @@ export const delAccount = () => async (dispatch) => {
       });
     }
   }
+};
+
+export const clearProfile = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE }); // Deletes profile from state
 };

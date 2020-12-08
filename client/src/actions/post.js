@@ -5,16 +5,17 @@ import {
   ADD_POST_SUCCESS,
   DELETE_POST_SUCCESS,
   GET_POSTS_SUCCESS,
+  GET_POST_REQUEST,
   GET_POST_SUCCESS,
   POST_FAIL,
-  POST_REQUEST,
+  CLEAR_POST,
   REMOVE_COMMENT_SUCCESS,
   UPDATE_LIKES_SUCCESS,
 } from './types';
 
 // Get posts
 export const getPosts = () => async (dispatch) => {
-  // dispatch({ type: POST_REQUEST });
+  dispatch({ type: CLEAR_POST });
   try {
     const res = await axios.get('/posts');
     dispatch({
@@ -31,7 +32,7 @@ export const getPosts = () => async (dispatch) => {
 
 // Get post
 export const getPost = (postID) => async (dispatch) => {
-  dispatch({ type: POST_REQUEST });
+  dispatch({ type: GET_POST_REQUEST });
   try {
     const res = await axios.get(`/posts/${postID}`);
     dispatch({
@@ -48,7 +49,6 @@ export const getPost = (postID) => async (dispatch) => {
 
 // Add Like
 export const addLike = (postID) => async (dispatch) => {
-  // dispatch({ type: POST_REQUEST });
   try {
     const res = await axios.put(`/posts/${postID}/like`);
     dispatch({
@@ -65,7 +65,6 @@ export const addLike = (postID) => async (dispatch) => {
 
 // Remove Like
 export const removeLike = (postID) => async (dispatch) => {
-  // dispatch({ type: POST_REQUEST });
   try {
     const res = await axios.put(`/posts/${postID}/unlike`);
     dispatch({
@@ -82,7 +81,6 @@ export const removeLike = (postID) => async (dispatch) => {
 
 // Delete Post
 export const deletePost = (postID) => async (dispatch) => {
-  // dispatch({ type: POST_REQUEST });
   try {
     await axios.delete(`/posts/${postID}`);
     dispatch({
@@ -100,7 +98,6 @@ export const deletePost = (postID) => async (dispatch) => {
 
 // Add Post
 export const addPost = (formData) => async (dispatch) => {
-  dispatch({ type: POST_REQUEST });
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -124,7 +121,6 @@ export const addPost = (formData) => async (dispatch) => {
 
 // Add Comment
 export const addComment = (postID, formData) => async (dispatch) => {
-  // dispatch({ type: POST_REQUEST });
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -148,7 +144,6 @@ export const addComment = (postID, formData) => async (dispatch) => {
 
 // Remove Comment
 export const removeComment = (postID, commentID) => async (dispatch) => {
-  dispatch({ type: POST_REQUEST });
   try {
     await axios.delete(`/posts/${postID}/comment/${commentID}`);
     dispatch({
