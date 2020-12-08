@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addLike, removeLike, deletePost } from '../../actions/post';
 
