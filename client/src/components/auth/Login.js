@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-const Login = ({ isAuthenticated }) => {
+const Login = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   // Redirect if logged in
   // TODO: Include in useEffect
   if (isAuthenticated) {
@@ -33,12 +33,4 @@ const Login = ({ isAuthenticated }) => {
   );
 };
 
-Login.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps)(Login);
+export default Login;

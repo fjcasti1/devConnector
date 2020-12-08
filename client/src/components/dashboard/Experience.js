@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Moment from 'react-moment';
 import { delExperience } from '../../actions/profile';
 
-const Experience = ({ experienceArr, delExperience }) => {
+const Experience = ({ experienceArr }) => {
+  const dispatch = useDispatch();
+
   const experiences = experienceArr.map((exp) => (
     <tr key={exp._id}>
       <td>{exp.company}</td>
@@ -14,7 +16,10 @@ const Experience = ({ experienceArr, delExperience }) => {
         {exp.to === null ? 'Now' : <Moment format='YYYY/MM/DD'>{exp.to}</Moment>}
       </td>
       <td>
-        <button className='btn btn-danger' onClick={() => delExperience(exp._id)}>
+        <button
+          className='btn btn-danger'
+          onClick={() => dispatch(delExperience(exp._id))}
+        >
           Delete
         </button>
       </td>
@@ -41,7 +46,6 @@ const Experience = ({ experienceArr, delExperience }) => {
 
 Experience.propTypes = {
   experienceArr: PropTypes.array.isRequired,
-  delExperience: PropTypes.func.isRequired,
 };
 
-export default connect(null, { delExperience })(Experience);
+export default Experience;

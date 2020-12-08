@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addExperience } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +13,9 @@ const initialState = {
   description: '',
 };
 
-export const AddExperience = ({ addExperience, history }) => {
+export const AddExperience = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState(initialState);
 
   const { title, company, location, from, to, current, description } = formData;
@@ -24,7 +25,7 @@ export const AddExperience = ({ addExperience, history }) => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    addExperience(formData, history);
+    dispatch(addExperience(formData, history));
   };
 
   return (
@@ -108,8 +109,4 @@ export const AddExperience = ({ addExperience, history }) => {
   );
 };
 
-AddExperience.propTypes = {
-  addExperience: PropTypes.func.isRequired,
-};
-
-export default connect(null, { addExperience })(AddExperience);
+export default AddExperience;

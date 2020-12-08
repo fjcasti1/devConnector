@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 
@@ -19,19 +18,18 @@ const initialState = {
   instagram: '',
 };
 
-const ProfileForm = ({
-  profile: { profile, loading },
-  history,
-  createProfile,
-  getCurrentProfile,
-}) => {
-  const [formData, setFormData] = useState(initialState);
+const ProfileForm = ({ history }) => {
+  const dispatch = useDispatch();
+  const { profile, loading } = useSelector((state) => state.profile);
 
+  const [formData, setFormData] = useState(initialState);
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   useEffect(() => {
-    if (!profile) getCurrentProfile();
-    // eslint-disable-next-line
+    dispatch(getCurrentProfile());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (!loading && profile) {
       const profileData = { ...initialState };
       for (const key in profile) {
@@ -44,7 +42,7 @@ const ProfileForm = ({
         profileData.skills = profileData.skills.join(', ');
       setFormData(profileData);
     }
-  }, [loading, getCurrentProfile, profile]);
+  }, [dispatch, profile, loading]);
 
   const {
     company,
@@ -67,7 +65,7 @@ const ProfileForm = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, history, profile ? true : false);
+    dispatch(createProfile(formData, history, profile ? true : false));
   };
 
   return (
@@ -240,16 +238,4 @@ const ProfileForm = ({
   );
 };
 
-ProfileForm.propTypes = {
-  createProfile: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  profile: state.profile,
-});
-
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
-  ProfileForm,
-);
+export default ProfileForm;
