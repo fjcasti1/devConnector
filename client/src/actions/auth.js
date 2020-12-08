@@ -2,8 +2,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
-  LOGOUT,
   CLEAR_PROFILE,
+  LOGOUT_SUCCESS,
+  LOGOUT_REQUEST,
 } from './types';
 import axios from 'axios';
 
@@ -17,14 +18,18 @@ export const loadUser = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    dispatch({
-      type: LOAD_USER_FAIL,
-    });
+    dispatch({ type: LOAD_USER_FAIL });
   }
 };
 
 // Logout
-export const logout = () => (dispatch) => {
-  dispatch({ type: CLEAR_PROFILE });
-  dispatch({ type: LOGOUT });
+export const logout = (history) => async (dispatch) => {
+  dispatch({ type: LOGOUT_REQUEST });
+  try {
+    await axios.get('/auth/logout');
+    dispatch({ type: CLEAR_PROFILE });
+    dispatch({ type: LOGOUT_SUCCESS });
+  } catch (error) {
+    console.error(error);
+  }
 };
