@@ -9,7 +9,7 @@ import Education from './Education';
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { profile, loadingProfile } = useSelector((state) => state.profile);
 
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ const Dashboard = () => {
     dispatch(getCurrentProfile());
   }, [dispatch]);
 
-  return loading && profile == null ? (
+  return loadingProfile ? (
     <Spinner />
   ) : (
     <Fragment>
