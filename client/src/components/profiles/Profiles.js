@@ -1,20 +1,21 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProfiles } from '../../actions/profile';
+import { getProfiles, clearProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import ProfileItem from './ProfileItem';
 
 const Profiles = () => {
   const dispatch = useDispatch();
-  const { profiles, loading } = useSelector((state) => state.profile);
+  const { profiles, loadingProfiles } = useSelector((state) => state.profile);
 
   useEffect(() => {
+    dispatch(clearProfile());
     dispatch(getProfiles());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {loading ? (
+      {loadingProfiles ? (
         <Spinner />
       ) : (
         <Fragment>
