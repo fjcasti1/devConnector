@@ -31,7 +31,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    res.redirect('/profiles');
+    res.redirect('/login');
   },
 );
 
@@ -56,7 +56,7 @@ router.get(
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/login');
+  res.json({ msg: 'You are logged out!' });
 });
 
 export default router;
