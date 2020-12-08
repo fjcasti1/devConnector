@@ -38,8 +38,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge: 1000 * 3600 * 0.1 },
-    maxAge: Date.now() + 5 * 86400 * 1000,
+    cookie: { secure: false, maxAge: 1000 * 3600 * 1 },
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }),
 );
