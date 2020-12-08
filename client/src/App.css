@@ -241,6 +241,7 @@ nav,
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
 }
+
 .btn,
 .btn-large,
 .btn-small,
@@ -250,24 +251,6 @@ nav,
 .btn-flat {
   font-size: 14px;
   outline: 0;
-}
-
-.btn i,
-.btn-large i,
-.btn-small i,
-.btn-floating i,
-.btn-large i,
-.btn-small i,
-.btn-flat i {
-  font-size: 1.3rem;
-  line-height: inherit;
-}
-
-.btn:focus,
-.btn-large:focus,
-.btn-small:focus,
-.btn-floating:focus {
-  background-color: #1d7d74;
 }
 
 .btn,
