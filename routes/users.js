@@ -1,5 +1,5 @@
 import express from 'express';
-import auth from '../middleware/auth2.js';
+import auth from '../middleware/auth.js';
 import User from '../models/User.js';
 import Profile from '../models/Profile.js';
 import Post from '../models/Post.js';

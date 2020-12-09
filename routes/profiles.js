@@ -1,5 +1,5 @@
 import express from 'express';
-import auth from '../middleware/auth2.js';
+import auth from '../middleware/auth.js';
 import Profile from '../models/Profile.js';
 import { check, validationResult } from 'express-validator';
 import request from 'request';
