@@ -1,10 +1,11 @@
 import express from 'express';
 import passport from 'passport';
 import auth from '../../middleware/auth2.js';
+import dotenv from 'dotenv';
 
 const router = express.Router();
 
-const REDIRECT = 'https://app-dev-general.herokuapp.com';
+dotenv.config();
 
 // @route     GET auth/user
 // @desc      Get authenticated user
@@ -33,7 +34,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    res.redirect(REDIRECT);
+    res.redirect(process.env.REDIRECT_URL);
   },
 );
 
@@ -52,7 +53,7 @@ router.get(
   '/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect(REDIRECT);
+    res.redirect(process.env.REDIRECT_URL);
   },
 );
 
