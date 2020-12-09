@@ -1,8 +1,8 @@
 import express from 'express';
-import auth from '../../middleware/auth2.js';
-import User from '../../models/User.js';
-import Profile from '../../models/Profile.js';
-import Post from '../../models/Post.js';
+import auth from '../middleware/auth2.js';
+import User from '../models/User.js';
+import Profile from '../models/Profile.js';
+import Post from '../models/Post.js';
 
 const router = express.Router();
 
