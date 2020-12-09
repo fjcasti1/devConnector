@@ -38,7 +38,7 @@ const ProfileSchema = mongoose.Schema({
     youtube: { type: String },
     twitter: { type: String },
     facebook: { type: String },
-    linedin: { type: String },
+    linkedin: { type: String },
     instagram: { type: String },
   },
   createdAt: { type: Date, default: Date.now },
