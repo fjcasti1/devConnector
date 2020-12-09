@@ -31,12 +31,25 @@ router.get(
 // @access    Public
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    res.redirect(REDIRECT);
-    // res.send('caca');
-  },
+  passport.authenticate('google', {
+    successRedirect: '/login',
+    failureRedirect: '/login',
+    failureFlash: true,
+  }),
 );
+
+// router.get(
+//   '/google/callback',
+//   passport.authenticate('google', {
+//     successRedirect: '/login',
+//     failureRedirect: '/login',
+//     failureFlash: true,
+//   }),
+//   (req, res) => {
+//     res.redirect(REDIRECT);
+//     // res.send('caca');
+//   },
+// );
 
 // @route     GET auth/github
 // @desc      Authenticate with GitHub
