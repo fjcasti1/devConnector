@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { addComment } from '../../actions/post';
-import { connect } from 'react-redux';
 
-const CommentForm = ({ postID, addComment }) => {
+const CommentForm = ({ postID }) => {
+  const dispatch = useDispatch();
+
   const [text, setText] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addComment(postID, { text });
+    dispatch(addComment(postID, { text }));
     setText('');
   };
 
@@ -32,8 +33,4 @@ const CommentForm = ({ postID, addComment }) => {
   );
 };
 
-CommentForm.propTypes = {
-  addComment: PropTypes.func.isRequired,
-};
-
-export default connect(null, { addComment })(CommentForm);
+export default CommentForm;

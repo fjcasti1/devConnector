@@ -1,19 +1,10 @@
-const jwt = require('jsonwebtoken');
-
-module.exports = function (req, res, next) {
-  // Get token from header
-  const token = req.header('x-auth-token');
-
-  // Check if no token
-  if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
+const auth = (req, res, next) => {
+  // Check if there is no user attached to the req object
+  // which would happen if the user is not logged in
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ msg: 'Not logged in, authorization denied' });
   }
-  // Verify the token
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.user;
-    next();
-  } catch (err) {
-    res.status(401).json({ msh: 'Token is not valid' });
-  }
+  next();
 };
+
+export default auth;

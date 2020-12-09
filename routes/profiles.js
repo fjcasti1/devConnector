@@ -1,20 +1,21 @@
-const express = require('express');
-const router = express.Router();
-const auth = require('../../middleware/auth');
-const User = require('../../models/User');
-const Profile = require('../../models/Profile');
-const Post = require('../../models/Post');
-const { check, validationResult } = require('express-validator');
-const request = require('request');
+import express from 'express';
+import auth from '../middleware/auth.js';
+import Profile from '../models/Profile.js';
+import { check, validationResult } from 'express-validator';
+import request from 'request';
 
-// @route     GET api/profile/me
+// TODO: Update experience & education
+
+const router = express.Router();
+
+// @route     GET profiles/me
 // @desc      Get current user profile
 // @access    Private
 router.get('/me', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id }).populate('user', [
       'name',
-      'avatar',
+      'image',
     ]);
 
     if (!profile) {
@@ -28,7 +29,7 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
-// @route     POST api/profile
+// @route     POST profiles/
 // @desc      Create or update a user profile
 // @access    Private
 router.post(
@@ -110,12 +111,12 @@ router.post(
   },
 );
 
-// @route     GET api/profile
+// @route     GET profiles/
 // @desc      Get all profiles
 // @access    Public
 router.get('/', async (req, res) => {
   try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    const profiles = await Profile.find().populate('user', ['name', 'image']);
     res.json(profiles);
   } catch (err) {
     console.error(err.message);
@@ -123,14 +124,14 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route     GET api/profile/user/:user_id
+// @route     GET profiles/:userId
 // @desc      Get profile by user ID
 // @access    Public
-router.get('/user/:user_id', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.params.user_id,
-    }).populate('user', ['name', 'avatar']);
+      user: req.params.userId,
+    }).populate('user', ['name', 'image']);
 
     if (!profile) return res.status(400).json({ msg: 'Profile not found' });
 
@@ -144,29 +145,11 @@ router.get('/user/:user_id', async (req, res) => {
   }
 });
 
-// @route     DELETE api/profile
-// @desc      Delete profile, user & posts
-// @access    Private
-router.delete('/', auth, async (req, res) => {
-  try {
-    // Remove posts
-    await Post.deleteMany({ user: req.user.id });
-    // Remove profile
-    await Profile.findOneAndRemove({ user: req.user.id });
-    // Remove User
-    await User.findOneAndRemove({ _id: req.user.id });
-    res.json({ msg: 'User deleted' });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
-
-// @route     PUT api/profile/experience
+// @route     POST profiles/me/experience
 // @desc      Add profile experience
 // @access    Private
-router.put(
-  '/experience',
+router.post(
+  '/me/experience',
   [
     auth,
     [
@@ -200,18 +183,22 @@ router.put(
   },
 );
 
-// @route     DELETE api/profile/experience/:exp_id
+// @route     DELETE profiles/me/experience/:expId
 // @desc      Delete experience from profile
 // @access    Private
-router.delete('/experience/:exp_id', auth, async (req, res) => {
+router.delete('/me/experience/:expId', auth, async (req, res) => {
   try {
     // Get profile profile
     const profile = await Profile.findOne({ user: req.user.id });
     // Get the remove index
     const removeIndex = profile.experience
       .map((item) => item.id)
-      .indexOf(req.params.exp_id);
+      .indexOf(req.params.expId);
+
+    if (removeIndex === -1)
+      return res.status(400).json({ msg: 'Experience item not found' });
     profile.experience.splice(removeIndex, 1);
+
     await profile.save();
     res.json(profile);
   } catch (err) {
@@ -220,11 +207,11 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
   }
 });
 
-// @route     PUT api/profile/education
+// @route     POST profiles/me/education
 // @desc      Add profile education
 // @access    Private
-router.put(
-  '/education',
+router.post(
+  '/me/education',
   [
     auth,
     [
@@ -267,18 +254,22 @@ router.put(
   },
 );
 
-// @route     DELETE api/profile/education/:edu_id
+// @route     DELETE profiles/me/education/:eduId
 // @desc      Delete education from profile
 // @access    Private
-router.delete('/education/:edu_id', auth, async (req, res) => {
+router.delete('/me/education/:eduId', auth, async (req, res) => {
   try {
     // Get profile profile
     const profile = await Profile.findOne({ user: req.user.id });
     // Get the remove index
     const removeIndex = profile.education
       .map((item) => item.id)
-      .indexOf(req.params.edu_id);
+      .indexOf(req.params.eduId);
+
+    if (removeIndex === -1)
+      return res.status(400).json({ msg: 'Education item not found' });
     profile.education.splice(removeIndex, 1);
+
     await profile.save();
     res.json(profile);
   } catch (err) {
@@ -287,12 +278,13 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
   }
 });
 
-// @route     GET api/profile/github/:username
+// @route     GET profiles/github/:username
 // @desc      Get user repos from Github
 // @access    Public
 router.get('/github/:username', async (req, res) => {
   const githubClientId = process.env.GITHUB_CLIENT_ID;
   const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+
   try {
     const options = {
       uri: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${githubClientId}&client_secret=${githubClientSecret}`,
@@ -313,4 +305,4 @@ router.get('/github/:username', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

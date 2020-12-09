@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getProfileById } from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
@@ -10,22 +9,28 @@ import ProfileExperience from './ProfileExperience';
 import ProfileEducation from './ProfileEducation';
 import ProfileRepos from './ProfileRepos';
 
-const Profile = ({ match, getProfileById, profile: { profile, loading }, auth }) => {
+const Profile = ({ match }) => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const { profile, loadingProfile, loadingRepos } = useSelector(
+    (state) => state.profile,
+  );
+
   useEffect(() => {
-    getProfileById(match.params.id);
-  }, [getProfileById, match.params.id]);
+    dispatch(getProfileById(match.params.id));
+  }, [dispatch, match.params.id]);
 
   return (
     <Fragment>
-      {profile == null || loading ? (
+      {profile == null || loadingProfile ? (
         <Spinner />
       ) : (
         <Fragment>
           <Link to='/profiles' className='btn btn-light'>
             Back to Profiles
           </Link>
-          {auth.isAuthenticated &&
-            !auth.loading &&
+          {!auth.loading &&
+            auth.isAuthenticated &&
             auth.user._id === profile.user._id && (
               <Link to='/edit-profile' className='btn btn-dark'>
                 Edit Profile
@@ -37,7 +42,10 @@ const Profile = ({ match, getProfileById, profile: { profile, loading }, auth })
             <ProfileExperience profile={profile} />
             <ProfileEducation profile={profile} />
             {profile.githubusername && (
-              <ProfileRepos username={profile.githubusername} />
+              <ProfileRepos
+                username={profile.githubusername}
+                loading={loadingRepos}
+              />
             )}
           </div>
         </Fragment>
@@ -46,15 +54,4 @@ const Profile = ({ match, getProfileById, profile: { profile, loading }, auth })
   );
 };
 
-Profile.propTypes = {
-  getProfileById: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  profile: state.profile,
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, { getProfileById })(Profile);
+export default Profile;

@@ -1,59 +1,80 @@
 import {
-  GET_PROFILE,
-  GET_PROFILES,
-  GET_REPOS,
-  CLEAR_PROFILE,
-  PROFILE_ERROR,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILES_SUCCESS,
   CREATE_PROFILE,
-  UPDATE_PROFILE,
+  UPDATE_PROFILE_SUCCESS,
+  CLEAR_PROFILE,
+  GET_REPOS_REQUEST,
+  GET_REPOS_SUCCESS,
+  PROFILE_FAIL,
 } from '../actions/types';
 
 const initialState = {
   profile: null,
   profiles: [],
   repos: [],
-  loading: true,
+  loadingProfile: true,
+  loadingProfiles: true,
+  loadingRepos: true,
   error: {},
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case GET_PROFILE:
+    case GET_PROFILE_REQUEST:
+      return {
+        ...state,
+        loadingProfile: true,
+      };
+    // case GET_PROFILES_REQUEST:
+    //   return {
+    //     ...state,
+    //     loadingProfiles: true,
+    //   };
+    case GET_REPOS_REQUEST:
+      return {
+        ...state,
+        loadingRepos: true,
+      };
+    case GET_PROFILE_SUCCESS:
     case CREATE_PROFILE:
-    case UPDATE_PROFILE:
+    case UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
         profile: payload,
-        loading: false,
+        loadingProfile: false,
         error: {},
       };
-    case GET_PROFILES:
+    case GET_PROFILES_SUCCESS:
       return {
         ...state,
         profiles: payload,
-        loading: false,
+        loadingProfiles: false,
         error: {},
       };
-    case GET_REPOS:
+    case GET_REPOS_SUCCESS:
       return {
         ...state,
         repos: payload,
-        loading: false,
-      };
-    case PROFILE_ERROR:
-      return {
-        ...state,
-        profile: null,
-        error: payload,
-        loading: false,
+        loadingRepos: false,
+        error: {},
       };
     case CLEAR_PROFILE:
       return {
         ...state,
         profile: null,
         repos: [],
-        loading: false,
+        loadingProfile: true,
+      };
+    case PROFILE_FAIL:
+      return {
+        ...state,
+        profile: null,
+        loadingProfile: false,
+        loadingProfiles: false,
+        error: payload,
       };
     default:
       return state;

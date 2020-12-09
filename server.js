@@ -1,7 +1,20 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const path = require('path');
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import path from 'path';
+import morgan from 'morgan';
+import authRoutes from './routes/auth.js';
+import usersRoutes from './routes/users.js';
+import profileRoutes from './routes/profiles.js';
+import postsRoutes from './routes/posts.js';
+import passport from 'passport';
+import mongoose from 'mongoose';
+import connectMongo from 'connect-mongo';
+import session from 'express-session';
+// Passport config
+import './config/passportSetup.js';
+
+const MongoStore = connectMongo(session);
 
 dotenv.config();
 
@@ -11,16 +24,34 @@ const app = express();
 // Connect to DB
 connectDB();
 
+// Logging if in development mode
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-// app.get('/', (req, res) => res.send('API Running')); Not for production
+// Sessions Middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, maxAge: 1000 * 3600 * 1 },
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  }),
+);
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Define Routes
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/profile', require('./routes/api/profile'));
-app.use('/api/posts', require('./routes/api/posts'));
+app.use('/auth', authRoutes);
+app.use('/users', usersRoutes);
+app.use('/profiles', profileRoutes);
+app.use('/posts', postsRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -34,4 +65,6 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`),
+);

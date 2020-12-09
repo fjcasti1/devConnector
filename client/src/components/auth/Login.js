@@ -1,71 +1,36 @@
-import React, { Fragment, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { login } from '../../actions/auth';
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 
-const Login = ({ login, isAuthenticated }) => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+const Login = () => {
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
-  const { email, password } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    login({ email, password });
-  };
-
-  // Redirect if logged in
-  if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
-  }
-
-  return (
+  return loading ? (
+    <Spinner />
+  ) : isAuthenticated ? (
+    <Redirect to='/dashboard' />
+  ) : (
     <Fragment>
-      <h1 className='large text-primary'>Sign In</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Sign Into Your Account
-      </p>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Email Address'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-          />
+      <div className='login-container'>
+        <div className='card'>
+          <div className='card-title'>
+            <p className='lead'>
+              <i className='fas fa-user'></i> Sign Into Your Account
+            </p>
+          </div>
+          <div className='card-action'>
+            <a href='auth/google' className='btn btn-primary login-btn'>
+              Sign in with Google
+            </a>
+            <a href='auth/github' className='btn large btn-primary login-btn'>
+              Sign in with Github
+            </a>
+          </div>
         </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            value={password}
-            onChange={(e) => onChange(e)}
-          />
-        </div>
-        <input type='submit' className='btn btn-primary' value='LogIn' />
-      </form>
-      <p className='my-1'>
-        Don't have an account? <Link to='/register'>Sign Up</Link>
-      </p>
+      </div>
     </Fragment>
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { login })(Login);
+export default Login;

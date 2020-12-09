@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addEducation } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +13,9 @@ const initialState = {
   description: '',
 };
 
-export const AddEducation = ({ addEducation, history }) => {
+export const AddEducation = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState(initialState);
 
   const { school, degree, fieldofstudy, from, to, current, description } = formData;
@@ -24,7 +25,7 @@ export const AddEducation = ({ addEducation, history }) => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    addEducation(formData, history);
+    dispatch(addEducation(formData, history));
   };
 
   return (
@@ -108,8 +109,4 @@ export const AddEducation = ({ addEducation, history }) => {
   );
 };
 
-AddEducation.propTypes = {
-  addEducation: PropTypes.func.isRequired,
-};
-
-export default connect(null, { addEducation })(AddEducation);
+export default AddEducation;

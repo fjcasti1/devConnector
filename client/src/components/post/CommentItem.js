@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeComment } from '../../actions/post';
 
-const CommentItem = ({
-  comment: { _id, user, text, name, avatar, date },
-  postID,
-  auth,
-  removeComment,
-}) => {
+const CommentItem = ({ comment, postID }) => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  const { _id, user, text, name, image, date } = comment;
+
   return (
     <div className='post bg-white p-1 my-1'>
       <div>
         <Link to={`/profile/${user}`}>
-          <img className='round-img' src={avatar} alt='' />
+          <img className='round-img' src={image} alt='' />
           <h4>{name}</h4>
         </Link>
       </div>
@@ -28,7 +28,7 @@ const CommentItem = ({
           <button
             type='button'
             className='btn btn-danger'
-            onClick={() => removeComment(postID, _id)}
+            onClick={() => dispatch(removeComment(postID, _id))}
           >
             Delete Comment
           </button>
@@ -41,12 +41,6 @@ const CommentItem = ({
 CommentItem.propTypes = {
   comment: PropTypes.object.isRequired,
   postID: PropTypes.string.isRequired,
-  auth: PropTypes.object.isRequired,
-  removeComment: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, { removeComment })(CommentItem);
+export default CommentItem;
