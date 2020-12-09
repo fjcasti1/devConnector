@@ -23,13 +23,12 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Logout
-export const logout = (history) => async (dispatch) => {
+export const logout = () => async (dispatch) => {
   dispatch({ type: LOGOUT_REQUEST });
   try {
     dispatch({ type: CLEAR_PROFILE });
     await axios.get('/auth/logout');
     dispatch({ type: LOGOUT_SUCCESS });
-    history.push('/login');
   } catch (error) {
     console.error(error);
   }

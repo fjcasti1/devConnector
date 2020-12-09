@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../actions/auth';
 
-const Navbar = ({ history }) => {
+const Navbar = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
@@ -26,7 +26,7 @@ const Navbar = ({ history }) => {
         </Link>
       </li>
       <li>
-        <Link to='/login' onClick={() => dispatch(logout(history))}>
+        <Link to='/login' onClick={() => dispatch(logout())}>
           <i className='fas fa-sign-out-alt'></i>
           <span className='hide-sm'> Logout</span>
         </Link>
