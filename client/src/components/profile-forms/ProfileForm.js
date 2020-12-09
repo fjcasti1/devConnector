@@ -207,23 +207,23 @@ const ProfileForm = ({ history }) => {
             </div>
 
             <div className='form-group social-input'>
-              <i className='fab fa-linkedin fa-2x'></i>
-              <input
-                type='text'
-                placeholder='Linkedin URL'
-                name='linkedin'
-                value={linkedin}
-                onChange={onChange}
-              />
-            </div>
-
-            <div className='form-group social-input'>
               <i className='fab fa-instagram fa-2x'></i>
               <input
                 type='text'
                 placeholder='Instagram URL'
                 name='instagram'
                 value={instagram}
+                onChange={onChange}
+              />
+            </div>
+
+            <div className='form-group social-input'>
+              <i className='fab fa-linkedin fa-2x'></i>
+              <input
+                type='text'
+                placeholder='Linkedin URL'
+                name='linkedin'
+                value={linkedin}
                 onChange={onChange}
               />
             </div>
