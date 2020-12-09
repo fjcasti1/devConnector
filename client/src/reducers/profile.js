@@ -66,6 +66,7 @@ export default function (state = initialState, action) {
         ...state,
         profile: null,
         repos: [],
+        loadingProfile: true,
       };
     case PROFILE_FAIL:
       return {
