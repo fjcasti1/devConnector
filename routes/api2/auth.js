@@ -4,7 +4,7 @@ import auth from '../../middleware/auth2.js';
 
 const router = express.Router();
 
-const REDIRECT = 'https://app-dev-general.herokuapp.com';
+const REDIRECT = 'https://app-dev-general.herokuapp.com/login';
 
 // @route     GET auth/user
 // @desc      Get authenticated user
