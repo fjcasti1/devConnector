@@ -4,7 +4,7 @@ import auth from '../../middleware/auth2.js';
 
 const router = express.Router();
 
-const REDIRECT = 'https://app-dev-general.herokuapp.com/dashboard';
+const REDIRECT = 'https://app-dev-general.herokuapp.com';
 
 // @route     GET auth/user
 // @desc      Get authenticated user
@@ -33,8 +33,8 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    // res.redirect(REDIRECT);
-    res.send('caca');
+    res.redirect(REDIRECT);
+    // res.send('caca');
   },
 );
 
