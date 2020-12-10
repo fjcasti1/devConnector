@@ -6,6 +6,26 @@ import { check, validationResult } from 'express-validator';
 
 const router = express.Router();
 
+const getCurrentUserLikeAndDislike = (post, userID) => {
+  // Get current user's like, if any
+  const currentUserLike = post.likes.filter(
+    (like) => like.user.toString() === userID,
+  );
+  // Get current user's dislike, if any
+  const currentUserDislike = post.dislikes.filter(
+    (dislike) => dislike.user.toString() === userID,
+  );
+
+  return { currentUserLike, currentUserDislike };
+};
+
+const removeFromArray = (array, userID) => {
+  // Get remove index
+  const removeIndex = array.map((item) => item.user.toString()).indexOf(userID);
+  // Remove item from array
+  array.splice(removeIndex, 1);
+};
+
 // @route     POST posts/
 // @desc      Create a post
 // @access    Private
@@ -102,20 +122,30 @@ router.put('/:postId/like', auth, async (req, res) => {
     if (!post) {
       return res.status(404).json({ msg: 'Post not found' });
     }
-    // Check if the post has already been liked by user
-    if (
-      post.likes.filter((like) => like.user.toString() === req.user.id).length > 0
-    ) {
-      // Post already liked by user
-      return res.status(400).json({ msg: 'Post already liked' });
+
+    const { currentUserLike, currentUserDislike } = getCurrentUserLikeAndDislike(
+      post,
+      req.user.id,
+    );
+
+    // Remove dislike if user previously disliked the post
+    if (currentUserDislike.length > 0) {
+      removeFromArray(post.dislikes, req.user.id);
     }
-    // Add like
-    post.likes.unshift({ user: req.user.id });
+
+    // Toggle like
+    if (currentUserLike.length == 0) {
+      // - Add like if post not yet liked
+      post.likes.unshift({ user: req.user.id });
+    } else if (currentUserLike.length > 0) {
+      // - Remove like if post already liked
+      removeFromArray(post.likes, req.user.id);
+    }
 
     // Save post
     await post.save();
 
-    res.json(post.likes);
+    res.json({ likes: post.likes, dislikes: post.dislikes });
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {
@@ -125,35 +155,39 @@ router.put('/:postId/like', auth, async (req, res) => {
   }
 });
 
-// @route     PUT posts/:postId/unlike
-// @desc      Unlike a post
+// @route     PUT posts/:postId/dislike
+// @desc      Dislike a post
 // @access    Private
-router.put('/:postId/unlike', auth, async (req, res) => {
+router.put('/:postId/dislike', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);
     if (!post) {
       return res.status(404).json({ msg: 'Post not found' });
     }
-    // Check if the post has NOT been liked by user
-    if (
-      post.likes.filter((like) => like.user.toString() === req.user.id).length === 0
-    ) {
-      // Post not yet been liked by user
-      return res.status(400).json({ msg: 'Post has not yet been liked' });
-    }
-    // Unlike
-    // - Get remove index
-    const removeIndex = post.likes
-      .map((like) => like.user.toString())
-      .indexOf(req.user.id);
 
-    // - Remove like from array
-    post.likes.splice(removeIndex, 1);
+    const { currentUserLike, currentUserDislike } = getCurrentUserLikeAndDislike(
+      post,
+      req.user.id,
+    );
+
+    // Remove like if user previously liked the post
+    if (currentUserLike.length > 0) {
+      removeFromArray(post.likes, req.user.id);
+    }
+
+    // Toggle dislike
+    if (currentUserDislike.length == 0) {
+      // - Add dislike if post not yet disliked
+      post.dislikes.unshift({ user: req.user.id });
+    } else if (currentUserDislike.length > 0) {
+      // - Remove dislike if post already disliked
+      removeFromArray(post.dislikes, req.user.id);
+    }
 
     // Save post
     await post.save();
 
-    res.json(post.likes);
+    res.json({ likes: post.likes, dislikes: post.dislikes });
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {

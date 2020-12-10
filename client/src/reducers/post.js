@@ -5,6 +5,7 @@ import {
   GET_POSTS_SUCCESS,
   GET_POST_SUCCESS,
   UPDATE_LIKES_SUCCESS,
+  UPDATE_DISLIKES_SUCCESS,
   DELETE_POST_SUCCESS,
   ADD_POST_SUCCESS,
   ADD_COMMENT_SUCCESS,
@@ -52,28 +53,42 @@ export default function (state = initialState, action) {
               }
             : post,
         ),
-        loading: false,
+        loadingPosts: false,
+        error: {},
+      };
+    case UPDATE_DISLIKES_SUCCESS:
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === payload.postID
+            ? {
+                ...post,
+                dislikes: payload.dislikes,
+              }
+            : post,
+        ),
+        loadingPosts: false,
         error: {},
       };
     case DELETE_POST_SUCCESS:
       return {
         ...state,
         posts: state.posts.filter((post) => post._id !== payload),
-        loading: false,
+        loadingPost: false,
         error: {},
       };
     case ADD_POST_SUCCESS:
       return {
         ...state,
         posts: [payload, ...state.posts],
-        loading: false,
+        loadingPost: false,
         error: {},
       };
     case ADD_COMMENT_SUCCESS:
       return {
         ...state,
         post: { ...state.post, comments: payload },
-        loading: false,
+        loadingPost: false,
         error: {},
       };
     case REMOVE_COMMENT_SUCCESS:
@@ -83,7 +98,7 @@ export default function (state = initialState, action) {
           ...state.post,
           comments: state.post.comments.filter((comment) => comment._id !== payload),
         },
-        loading: false,
+        loadingPost: false,
         error: {},
       };
     case CLEAR_POST:

@@ -3,13 +3,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
-import { addLike, removeLike, deletePost } from '../../actions/post';
+import { likePost, dislikePost, deletePost } from '../../actions/post';
 
 const PostItem = ({ post, showActions }) => {
   const dispatch = useDispatch();
   const userID = useSelector((state) => state.auth.user._id); // Logged in user
 
-  const { _id, loading, name, image, text, date, likes, comments, user } = post;
+  const {
+    _id,
+    loading,
+    name,
+    image,
+    text,
+    date,
+    likes,
+    dislikes,
+    comments,
+    user,
+  } = post;
 
   return (
     <div className='post bg-white p-1 my-1'>
@@ -29,7 +40,7 @@ const PostItem = ({ post, showActions }) => {
             <button
               type='button'
               className='btn btn-light'
-              onClick={() => dispatch(addLike(_id))}
+              onClick={() => dispatch(likePost(_id))}
             >
               <i className='fas fa-thumbs-up' />{' '}
               {likes.length > 0 && <span>{likes.length}</span>}
@@ -37,9 +48,10 @@ const PostItem = ({ post, showActions }) => {
             <button
               type='button'
               className='btn btn-light'
-              onClick={() => dispatch(removeLike(_id))}
+              onClick={() => dispatch(dislikePost(_id))}
             >
-              <i className='fas fa-thumbs-down' />
+              <i className='fas fa-thumbs-down' />{' '}
+              {dislikes.length > 0 && <span>{dislikes.length}</span>}
             </button>
             <Link to={`/posts/${_id}`} className='btn btn-primary'>
               Discussion{' '}

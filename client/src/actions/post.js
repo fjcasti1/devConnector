@@ -11,6 +11,7 @@ import {
   CLEAR_POST,
   REMOVE_COMMENT_SUCCESS,
   UPDATE_LIKES_SUCCESS,
+  UPDATE_DISLIKES_SUCCESS,
 } from './types';
 
 // Get posts
@@ -47,13 +48,18 @@ export const getPost = (postID) => async (dispatch) => {
   }
 };
 
-// Add Like
-export const addLike = (postID) => async (dispatch) => {
+// Like a Post
+export const likePost = (postID) => async (dispatch) => {
   try {
     const res = await axios.put(`/posts/${postID}/like`);
+    console.log(res.data);
     dispatch({
       type: UPDATE_LIKES_SUCCESS,
-      payload: { postID, likes: res.data },
+      payload: { postID, likes: res.data.likes },
+    });
+    dispatch({
+      type: UPDATE_DISLIKES_SUCCESS,
+      payload: { postID, dislikes: res.data.dislikes },
     });
   } catch (err) {
     dispatch({
@@ -63,13 +69,17 @@ export const addLike = (postID) => async (dispatch) => {
   }
 };
 
-// Remove Like
-export const removeLike = (postID) => async (dispatch) => {
+// Dislike a Post
+export const dislikePost = (postID) => async (dispatch) => {
   try {
-    const res = await axios.put(`/posts/${postID}/unlike`);
+    const res = await axios.put(`/posts/${postID}/dislike`);
     dispatch({
       type: UPDATE_LIKES_SUCCESS,
-      payload: { postID, likes: res.data },
+      payload: { postID, likes: res.data.likes },
+    });
+    dispatch({
+      type: UPDATE_DISLIKES_SUCCESS,
+      payload: { postID, dislikes: res.data.dislikes },
     });
   } catch (err) {
     dispatch({
