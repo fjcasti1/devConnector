@@ -11,7 +11,7 @@ const PostItem = ({ post, showActions }) => {
 
   const {
     _id,
-    loading,
+    loadingPosts,
     name,
     image,
     text,
@@ -59,7 +59,7 @@ const PostItem = ({ post, showActions }) => {
                 <span className='comment-count'>{comments.length}</span>
               )}
             </Link>
-            {!loading && user === userID && (
+            {!loadingPosts && user === userID && (
               <button
                 type='button'
                 className='btn btn-danger'
