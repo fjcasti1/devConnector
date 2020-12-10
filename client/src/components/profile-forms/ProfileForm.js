@@ -96,7 +96,7 @@ const ProfileForm = ({ history }) => {
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Company'
+            placeholder='Company or Institution'
             name='company'
             value={company}
             onChange={onChange}
