@@ -1,13 +1,20 @@
 import mongoose from 'mongoose';
 
 const UserSchema = mongoose.Schema({
+  providerUserId: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  provider: {
+    type: String,
+  },
   name: {
     type: String,
     required: true,
   },
   email: {
     type: String,
-    required: true,
     unique: true,
   },
   image: {
