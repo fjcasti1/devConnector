@@ -16,11 +16,14 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const newUser = {
-        userId: profile.id,
+        provider: profile.provider,
+        providerUserId: profile.id,
         name: profile.displayName,
-        email: profile.emails[0].value,
         image: profile.photos[0].value,
       };
+      if (profile.emails !== null) {
+        newUser.email = profile.emails[0].value;
+      }
 
       try {
         let user = await User.findOne({ email: newUser.email });
@@ -45,10 +48,12 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const newUser = {
+        provider: profile.provider,
+        providerUserId: profile.id,
         name: profile.displayName,
-        email: profile.emails[0].value,
         image: profile.photos[0].value,
       };
+      if (profile.emails) newUser.email = profile.emails[0].value;
 
       try {
         let user = await User.findOne({ email: newUser.email });
