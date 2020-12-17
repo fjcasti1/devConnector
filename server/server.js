@@ -60,6 +60,9 @@ app.use('/api/users', usersRoutes);
 app.use('/api/profiles', profileRoutes);
 app.use('/api/posts', postsRoutes);
 
+// Define dirname
+const __dirname = path.resolve();
+
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
