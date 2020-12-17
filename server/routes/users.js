@@ -6,7 +6,7 @@ import Post from '../models/Post.js';
 
 const router = express.Router();
 
-// @route     DELETE users/me
+// @route     DELETE api/users/me
 // @desc      Delete posts, profile & user
 // @access    Private
 router.delete('/me', auth, async (req, res) => {

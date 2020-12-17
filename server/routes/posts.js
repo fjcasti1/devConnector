@@ -26,7 +26,7 @@ const removeFromArray = (array, userID) => {
   array.splice(removeIndex, 1);
 };
 
-// @route     POST posts/
+// @route     POST api/posts/
 // @desc      Create a post
 // @access    Private
 router.post(
@@ -56,7 +56,7 @@ router.post(
   },
 );
 
-// @route     GET posts/
+// @route     GET api/posts/
 // @desc      Get all posts
 // @access    Private
 router.get('/', auth, async (req, res) => {
@@ -69,7 +69,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route     GET posts/:postId
+// @route     GET api/posts/:postId
 // @desc      Get post by ID
 // @access    Private
 router.get('/:postId', auth, async (req, res) => {
@@ -88,7 +88,7 @@ router.get('/:postId', auth, async (req, res) => {
   }
 });
 
-// @route     DELETE posts/:postId
+// @route     DELETE api/posts/:postId
 // @desc      Delete post by ID
 // @access    Private
 router.delete('/:postId', auth, async (req, res) => {
@@ -113,7 +113,7 @@ router.delete('/:postId', auth, async (req, res) => {
   }
 });
 
-// @route     PUT posts/:postId/like
+// @route     PUT api/posts/:postId/like
 // @desc      Like a post
 // @access    Private
 router.put('/:postId/like', auth, async (req, res) => {
@@ -155,7 +155,7 @@ router.put('/:postId/like', auth, async (req, res) => {
   }
 });
 
-// @route     PUT posts/:postId/dislike
+// @route     PUT api/posts/:postId/dislike
 // @desc      Dislike a post
 // @access    Private
 router.put('/:postId/dislike', auth, async (req, res) => {
@@ -197,7 +197,7 @@ router.put('/:postId/dislike', auth, async (req, res) => {
   }
 });
 
-// @route     POST posts/:postId/comment
+// @route     POST api/posts/:postId/comment
 // @desc      Comment on a post with its id
 // @access    Private
 router.post(
@@ -230,7 +230,7 @@ router.post(
   },
 );
 
-// @route     DELETE posts/:postId/comment/:commentId
+// @route     DELETE api/posts/:postId/comment/:commentId
 // @desc      Delete a comment in a post
 // @access    Private
 router.delete('/:postId/comment/:commentId', auth, async (req, res) => {

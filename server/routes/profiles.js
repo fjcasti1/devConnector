@@ -8,7 +8,7 @@ import request from 'request';
 
 const router = express.Router();
 
-// @route     GET profiles/me
+// @route     GET api/profiles/me
 // @desc      Get current user profile
 // @access    Private
 router.get('/me', auth, async (req, res) => {
@@ -29,7 +29,7 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
-// @route     POST profiles/
+// @route     POST api/profiles/
 // @desc      Create or update a user profile
 // @access    Private
 router.post(
@@ -111,7 +111,7 @@ router.post(
   },
 );
 
-// @route     GET profiles/
+// @route     GET api/profiles/
 // @desc      Get all profiles
 // @access    Public
 router.get('/', async (req, res) => {
@@ -124,7 +124,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route     GET profiles/:userId
+// @route     GET api/profiles/:userId
 // @desc      Get profile by user ID
 // @access    Public
 router.get('/:userId', async (req, res) => {
@@ -145,7 +145,7 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-// @route     POST profiles/me/experience
+// @route     POST api/profiles/me/experience
 // @desc      Add profile experience
 // @access    Private
 router.post(
@@ -183,7 +183,7 @@ router.post(
   },
 );
 
-// @route     DELETE profiles/me/experience/:expId
+// @route     DELETE api/profiles/me/experience/:expId
 // @desc      Delete experience from profile
 // @access    Private
 router.delete('/me/experience/:expId', auth, async (req, res) => {
@@ -207,7 +207,7 @@ router.delete('/me/experience/:expId', auth, async (req, res) => {
   }
 });
 
-// @route     POST profiles/me/education
+// @route     POST api/profiles/me/education
 // @desc      Add profile education
 // @access    Private
 router.post(
@@ -254,7 +254,7 @@ router.post(
   },
 );
 
-// @route     DELETE profiles/me/education/:eduId
+// @route     DELETE api/profiles/me/education/:eduId
 // @desc      Delete education from profile
 // @access    Private
 router.delete('/me/education/:eduId', auth, async (req, res) => {
@@ -278,7 +278,7 @@ router.delete('/me/education/:eduId', auth, async (req, res) => {
   }
 });
 
-// @route     GET profiles/github/:username
+// @route     GET api/profiles/github/:username
 // @desc      Get user repos from Github
 // @access    Public
 router.get('/github/:username', async (req, res) => {

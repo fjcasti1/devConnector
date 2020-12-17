@@ -5,11 +5,14 @@ import dotenv from 'dotenv';
 
 const router = express.Router();
 
+// TODO: Protect callbacks?
+// TODO: Set callbacks to the correct URL & page
+
 dotenv.config();
 
-// @route     GET auth/user
+// @route     GET api/auth/user
 // @desc      Get authenticated user
-// @access    Public
+// @access    Private
 router.get('/user', auth, async (req, res) => {
   try {
     res.send(req.user);
@@ -19,7 +22,7 @@ router.get('/user', auth, async (req, res) => {
   }
 });
 
-// @route     GET auth/google
+// @route     GET api/auth/google
 // @desc      Authenticate with Google
 // @access    Public
 router.get(
@@ -27,7 +30,7 @@ router.get(
   passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 
-// @route     GET auth/google/callback
+// @route     GET api/auth/google/callback
 // @desc      Google auth callback
 // @access    Public
 router.get(
@@ -38,7 +41,7 @@ router.get(
   },
 );
 
-// @route     GET auth/github
+// @route     GET api/auth/github
 // @desc      Authenticate with GitHub
 // @access    Public
 router.get(
@@ -46,7 +49,7 @@ router.get(
   passport.authenticate('github', { scope: ['profile', 'email'] }),
 );
 
-// @route     GET auth/github/callback
+// @route     GET api/auth/github/callback
 // @desc      GitHub auth callback
 // @access    Public
 router.get(
@@ -57,7 +60,10 @@ router.get(
   },
 );
 
-router.get('/logout', (req, res) => {
+// @route     GET api/auth/logout
+// @desc      Logout
+// @access    Private
+router.get('/logout', auth, (req, res) => {
   req.logout();
   res.json({ msg: 'You are logged out!' });
 });
