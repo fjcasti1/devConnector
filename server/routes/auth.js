@@ -37,7 +37,7 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    res.redirect(process.env.REDIRECT_URL);
+    res.redirect(`${process.env.REDIRECT_URL}/dashboard`);
   },
 );
 
@@ -56,7 +56,7 @@ router.get(
   '/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect(process.env.REDIRECT_URL);
+    res.redirect(`${process.env.REDIRECT_URL}/dashboard`);
   },
 );
 
