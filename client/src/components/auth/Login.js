@@ -6,16 +6,17 @@ const Login = () => {
       <div className='login-container'>
         <div className='card'>
           <div className='card-title'>
-            <p className='lead'>
+            <p className='lead py-1'>
               <i className='fas fa-user'></i> Sign Into Your Account
             </p>
           </div>
           <div className='card-action'>
             <a href='api/auth/google' className='btn btn-primary login-btn'>
-              Sign in with Google
+              <span className='hide-sm'>Continue with </span>Google
             </a>
-            <a href='api/auth/github' className='btn large btn-primary login-btn'>
-              Sign in with Github
+            <a href='api/auth/github' className='btn btn-primary login-btn'>
+              <img src='../../../img/google.png' />
+              <span className='hide-sm'>Continue with </span>GitHub
             </a>
           </div>
         </div>
