@@ -20,7 +20,7 @@ const initialState = {
   error: {},
 };
 
-export default function (state = initialState, action) {
+export const profileReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case GET_PROFILE_REQUEST:
@@ -79,4 +79,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};
