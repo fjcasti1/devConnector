@@ -65,7 +65,11 @@ router.get(
 // @access    Private
 router.get('/logout', auth, (req, res) => {
   req.logout();
-  res.json({ msg: 'You are logged out!' });
+  req.session.destroy(() => {
+    res
+      .clearCookie('connect.sid', { path: '/' })
+      .json({ msg: 'You are logged out!' });
+  });
 });
 
 export default router;
