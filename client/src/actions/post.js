@@ -18,7 +18,7 @@ import {
 export const getPosts = () => async (dispatch) => {
   dispatch({ type: CLEAR_POST });
   try {
-    const res = await axios.get('/posts');
+    const res = await axios.get('/api/posts');
     dispatch({
       type: GET_POSTS_SUCCESS,
       payload: res.data,
@@ -35,7 +35,7 @@ export const getPosts = () => async (dispatch) => {
 export const getPost = (postID) => async (dispatch) => {
   dispatch({ type: GET_POST_REQUEST });
   try {
-    const res = await axios.get(`/posts/${postID}`);
+    const res = await axios.get(`/api/posts/${postID}`);
     dispatch({
       type: GET_POST_SUCCESS,
       payload: res.data,
@@ -51,7 +51,7 @@ export const getPost = (postID) => async (dispatch) => {
 // Like a Post
 export const likePost = (postID) => async (dispatch) => {
   try {
-    const res = await axios.put(`/posts/${postID}/like`);
+    const res = await axios.put(`/api/posts/${postID}/like`);
     console.log(res.data);
     dispatch({
       type: UPDATE_LIKES_SUCCESS,
@@ -72,7 +72,7 @@ export const likePost = (postID) => async (dispatch) => {
 // Dislike a Post
 export const dislikePost = (postID) => async (dispatch) => {
   try {
-    const res = await axios.put(`/posts/${postID}/dislike`);
+    const res = await axios.put(`/api/posts/${postID}/dislike`);
     dispatch({
       type: UPDATE_LIKES_SUCCESS,
       payload: { postID, likes: res.data.likes },
@@ -92,7 +92,7 @@ export const dislikePost = (postID) => async (dispatch) => {
 // Delete Post
 export const deletePost = (postID) => async (dispatch) => {
   try {
-    await axios.delete(`/posts/${postID}`);
+    await axios.delete(`/api/posts/${postID}`);
     dispatch({
       type: DELETE_POST_SUCCESS,
       payload: postID,
@@ -115,7 +115,7 @@ export const addPost = (formData) => async (dispatch) => {
   };
 
   try {
-    const res = await axios.post('/posts/', formData, config);
+    const res = await axios.post('/api/posts/', formData, config);
     dispatch({
       type: ADD_POST_SUCCESS,
       payload: res.data,
@@ -138,7 +138,7 @@ export const addComment = (postID, formData) => async (dispatch) => {
   };
 
   try {
-    const res = await axios.post(`/posts/${postID}/comment`, formData, config);
+    const res = await axios.post(`/api/posts/${postID}/comment`, formData, config);
     dispatch({
       type: ADD_COMMENT_SUCCESS,
       payload: res.data,
@@ -155,7 +155,7 @@ export const addComment = (postID, formData) => async (dispatch) => {
 // Remove Comment
 export const removeComment = (postID, commentID) => async (dispatch) => {
   try {
-    await axios.delete(`/posts/${postID}/comment/${commentID}`);
+    await axios.delete(`/api/posts/${postID}/comment/${commentID}`);
     dispatch({
       type: REMOVE_COMMENT_SUCCESS,
       payload: commentID,

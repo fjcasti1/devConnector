@@ -12,7 +12,7 @@ import axios from 'axios';
 export const loadUser = () => async (dispatch) => {
   dispatch({ type: LOAD_USER_REQUEST });
   try {
-    const res = await axios.get('/auth/user');
+    const res = await axios.get('/api/auth/user');
     dispatch({
       type: LOAD_USER_SUCCESS,
       payload: res.data,
@@ -27,7 +27,7 @@ export const logout = () => async (dispatch) => {
   dispatch({ type: LOGOUT_REQUEST });
   try {
     dispatch({ type: CLEAR_PROFILE });
-    await axios.get('/auth/logout');
+    await axios.get('/api/auth/logout');
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
     console.error(error);
