@@ -1,16 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import Spinner from './Spinner';
 
 const Landing = () => {
-  const { isAuthenticated, loading } = useSelector((state) => state.auth);
-
-  return loading ? (
-    <Spinner />
-  ) : isAuthenticated ? (
-    <Redirect to='/dashboard' />
-  ) : (
+  return (
     <section className='landing'>
       <div className='dark-overlay'>
         <div className='landing-inner'>

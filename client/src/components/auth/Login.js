@@ -1,16 +1,7 @@
 import React, { Fragment } from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import Spinner from '../layout/Spinner';
 
 const Login = () => {
-  const { isAuthenticated, loading } = useSelector((state) => state.auth);
-
-  return loading ? (
-    <Spinner />
-  ) : isAuthenticated ? (
-    <Redirect to='/dashboard' />
-  ) : (
+  return (
     <Fragment>
       <div className='login-container'>
         <div className='card'>
