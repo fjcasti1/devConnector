@@ -5,9 +5,6 @@ import dotenv from 'dotenv';
 
 const router = express.Router();
 
-// TODO: Protect callbacks?
-// TODO: Set callbacks to the correct URL & page
-
 dotenv.config();
 
 // @route     GET api/auth/user
