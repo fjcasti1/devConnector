@@ -15,7 +15,6 @@ const Login = () => {
               <span className='hide-sm'>Continue with </span>Google
             </a>
             <a href='api/auth/github' className='btn btn-primary login-btn'>
-              <img src='../../../img/google.png' />
               <span className='hide-sm'>Continue with </span>GitHub
             </a>
           </div>
