@@ -20,10 +20,10 @@ const Login = () => {
             </p>
           </div>
           <div className='card-action'>
-            <a href='auth/google' className='btn btn-primary login-btn'>
+            <a href='api/auth/google' className='btn btn-primary login-btn'>
               Sign in with Google
             </a>
-            <a href='auth/github' className='btn large btn-primary login-btn'>
+            <a href='api/auth/github' className='btn large btn-primary login-btn'>
               Sign in with Github
             </a>
           </div>
