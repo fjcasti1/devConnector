@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import LoginButton from './LoginButton';
+import LoginForm from './LoginForm';
 import LoginSpacer from './LoginSpacer';
 
 const Login = () => {
@@ -7,9 +8,9 @@ const Login = () => {
     <Fragment>
       <div className='card login-container'>
         <div className='card-title'>
-          <p className='lead py-1'>
+          <h1 className='lead text-primary py-1'>
             <i className='fas fa-user'></i> Sign Into Your Account
-          </p>
+          </h1>
         </div>
         <div className='card-action'>
           <LoginButton provider='google' />
@@ -17,6 +18,8 @@ const Login = () => {
           <LoginButton provider='facebook' />
           <LoginSpacer />
           <LoginButton provider='guest' />
+          <LoginSpacer />
+          <LoginForm />
         </div>
       </div>
     </Fragment>
