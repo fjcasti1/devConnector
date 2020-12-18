@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import LoginButton from './LoginButton';
+import LoginSpacer from './LoginSpacer';
 
 const Login = () => {
   return (
@@ -14,7 +15,7 @@ const Login = () => {
           <LoginButton provider='google' />
           <LoginButton provider='github' name='GitHub' />
           <LoginButton provider='facebook' />
-          <p>or</p>
+          <LoginSpacer />
           <LoginButton provider='guest' />
         </div>
       </div>
