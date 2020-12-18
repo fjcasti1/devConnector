@@ -57,6 +57,22 @@ router.get(
   },
 );
 
+// @route     GET api/auth/facebook
+// @desc      Authenticate with Facebook
+// @access    Public
+router.get('/facebook', passport.authenticate('facebook'));
+
+// @route     GET api/auth/facebook/callback
+// @desc      Facebook auth callback
+// @access    Public
+router.get(
+  '/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.redirect(`${process.env.REDIRECT_URL}/dashboard`);
+  },
+);
+
 // @route     GET api/auth/logout
 // @desc      Logout
 // @access    Private
