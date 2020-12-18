@@ -59,7 +59,6 @@ img {
 
 .lead {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
 }
 
 .text-center {
@@ -130,7 +129,7 @@ img {
   display: inline-block;
   background: var(--light-color);
   color: #333;
-  padding: 0.4rem 1.3rem;
+  padding: 0.4rem 1.3rem !important;
   font-size: 1rem;
   border: none;
   cursor: pointer;
@@ -308,7 +307,8 @@ button {
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
+  border-bottom: solid 0.5px var(--primary-color);
+  box-shadow: 1px 1px 4px var(--primary-color);
   opacity: 0.9;
 }
 
@@ -351,17 +351,51 @@ button {
 
 /* Login Page */
 
-.login-btn {
-  width: 90% !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
 .login-container {
+  text-align: center;
+  align-items: center;
   margin: 50px auto;
   max-width: 1280px;
-  width: 400px;
+  width: 40%;
+}
+
+.login-btn {
+  display: flex;
+  width: 70% !important;
+  margin: 0.5rem auto !important;
   text-align: center;
+  align-items: center;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 0.25rem;
+  transition: all ease-in-out 0.4s;
+}
+
+.login-btn:hover {
+  transform: translateY(-3px);
+}
+
+.login-btn-google {
+  background-color: #db4437;
+}
+
+.login-btn-github {
+  background-color: #252525;
+}
+
+.login-btn-facebook {
+  background-color: #1877f2;
+}
+
+.login-btn-icon {
+  display: block;
+  size: 3rem;
+}
+
+.login-btn-text {
+  display: inline-block;
+  align-self: center;
+  padding-left: 1rem;
 }
 
 /* Profiles Page */
@@ -503,6 +537,21 @@ button {
   margin-bottom: 0.5rem;
 }
 
+/* Medium Screens */
+@media (max-width: 812px) {
+  .hide-md {
+    display: none;
+  }
+
+  .login-container {
+    width: 60%;
+  }
+
+  .lead {
+    font-size: 1.2rem;
+  }
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
@@ -511,6 +560,10 @@ button {
 
   .hide-sm {
     display: none;
+  }
+
+  .login-container {
+    width: 80%;
   }
 
   /* Text Styles */
