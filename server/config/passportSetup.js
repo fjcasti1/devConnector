@@ -33,6 +33,7 @@ passport.use(
         done(null, user);
       } catch (error) {
         console.error(error);
+        done(error, null);
       }
     },
   ),
@@ -63,6 +64,7 @@ passport.use(
         done(null, user);
       } catch (error) {
         console.error(error);
+        done(error, null);
       }
     },
   ),
