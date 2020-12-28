@@ -1,7 +1,12 @@
 import React, { Fragment, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { login } from '../../actions/auth';
+import { setAlert } from '../../actions/alert';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -14,7 +19,13 @@ const LoginForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // login({ email, password });
+    const fieldsAreFilled = email !== '' && password !== '';
+
+    if (!fieldsAreFilled) {
+      dispatch(setAlert('Please provide email & password', 'danger', 3000));
+    } else {
+      dispatch(login({ email, password }));
+    }
   };
   return (
     <Fragment>
