@@ -1,8 +1,10 @@
 import passport from 'passport';
 import dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
 import GoogleStrategy from 'passport-google-oauth20';
 import GitHubStrategy from 'passport-github2';
 import FacebookStrategy from 'passport-facebook';
+import LocalStrategy from 'passport-local';
 import User from '../models/User.js';
 
 dotenv.config();
@@ -80,7 +82,6 @@ passport.use(
       profileFields: ['id', 'displayName', 'picture.type(large)', 'email'],
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
       const newUser = {
         provider: profile.provider,
         providerUserId: profile.id,
@@ -103,11 +104,39 @@ passport.use(
   ),
 );
 
+passport.use(
+  new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
+    console.log('Local Strategy'.cyan.bold);
+    try {
+      // Check if user exists
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        console.log('No user'.red);
+        return done(null, false, { message: 'Invalid Credentials' });
+      }
+
+      // Check if password is correct
+      const isCorrect = await bcrypt.compare(password, user.password);
+      if (!isCorrect) {
+        console.log('Incorrect Password'.red);
+        return done(null, false, { message: 'Invalid Credentials' });
+      }
+
+      const sendUser = await User.findOne({ email: email }).select('-password');
+
+      console.log('All good'.green);
+      done(null, sendUser);
+    } catch (error) {
+      return done(error);
+    }
+  }),
+);
+
 // Serializer & Deserializer to allow sessions
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  await User.findById(id, (err, user) => done(err, user));
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => done(err, user));
 });
