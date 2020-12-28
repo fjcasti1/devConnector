@@ -12,6 +12,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import connectMongo from 'connect-mongo';
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 // Passport config
 import './config/passportSetup.js';
 // Mongo config
@@ -49,7 +50,16 @@ app.use(
 );
 
 // Cors Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }),
+);
+
+// Cookie Parser Middleware
+app.use(cookieParser(process.env.SESSION_SECRET));
+
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
