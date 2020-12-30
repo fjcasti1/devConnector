@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoginButton = ({ provider, name = null }) => {
+const LoginButtonProvider = ({ provider, name = null }) => {
   let continueText = '';
   let iconClass = '';
   if (!name) {
@@ -27,4 +27,4 @@ const LoginButton = ({ provider, name = null }) => {
   );
 };
 
-export default LoginButton;
+export default LoginButtonProvider;

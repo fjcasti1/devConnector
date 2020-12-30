@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import LoginButton from './LoginButton';
+import LoginButtonProvider from './LoginButtonProvider';
 import LoginForm from './LoginForm';
 import LoginSpacer from './LoginSpacer';
 
@@ -13,11 +13,10 @@ const Login = () => {
           </h1>
         </div>
         <div className='card-action'>
-          <LoginButton provider='google' />
-          <LoginButton provider='github' name='GitHub' />
-          <LoginButton provider='facebook' />
+          <LoginButtonProvider provider='google' />
+          <LoginButtonProvider provider='github' name='GitHub' />
           <LoginSpacer />
-          <LoginButton provider='guest' />
+          <LoginButtonProvider provider='guest' />
           <LoginSpacer />
           <LoginForm />
         </div>
