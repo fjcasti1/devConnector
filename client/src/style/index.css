@@ -394,6 +394,7 @@ button {
   border: none;
 }
 
+.register-btn,
 .login-btn {
   display: flex;
   width: 70%;
@@ -410,6 +411,7 @@ button {
   width: 100%;
 }
 
+.register-btn:hover,
 .login-btn:hover {
   transform: translateY(-3px);
 }
@@ -437,6 +439,7 @@ button {
   padding-left: 1rem;
 }
 
+.register-form,
 .login-form {
   width: 70% !important;
   margin: 0.5rem auto !important;
@@ -444,6 +447,12 @@ button {
   align-items: center;
   border-radius: 0.25rem;
   transition: all ease-in-out 0.4s;
+}
+
+.register-question,
+.login-question {
+  font-size: 0.8rem;
+  text-align: left;
 }
 
 /* Profiles Page */
