@@ -15,7 +15,6 @@ const Login = () => {
         <div className='card-action'>
           <LoginButton provider='google' />
           <LoginButton provider='github' name='GitHub' />
-          <LoginButton provider='facebook' />
           <LoginSpacer />
           <LoginButton provider='guest' />
           <LoginSpacer />
