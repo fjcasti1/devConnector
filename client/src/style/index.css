@@ -145,6 +145,7 @@ img {
   cursor: pointer;
   transition: opacity 0.2s ease-in;
   outline: none;
+  margin: 0.25rem;
 }
 
 .btn.block {
@@ -416,7 +417,8 @@ button {
   transform: translateY(-3px);
 }
 
-.login-btn-google {
+.login-btn-google,
+.login-btn-google2 {
   background-color: #db4437;
 }
 
