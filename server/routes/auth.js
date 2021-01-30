@@ -26,10 +26,7 @@ router.get('/user', auth, async (req, res) => {
 // @route     GET api/auth/google
 // @desc      Authenticate with Google
 // @access    Public
-router.get(
-  '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
-);
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // @route     GET api/auth/google/callback
 // @desc      Google auth callback
@@ -45,10 +42,7 @@ router.get(
 // @route     GET api/auth/github
 // @desc      Authenticate with GitHub
 // @access    Public
-router.get(
-  '/github',
-  passport.authenticate('github', { scope: ['profile', 'email'] }),
-);
+router.get('/github', passport.authenticate('github', { scope: ['profile', 'email'] }));
 
 // @route     GET api/auth/github/callback
 // @desc      GitHub auth callback
@@ -81,19 +75,19 @@ router.get(
 // @desc      Login an user
 // @access    Public
 router.post('/login', (req, res, next) => {
-  console.log('Route login before Local Strategy'.cyan.bold);
+  // console.log('Route login before Local Strategy'.cyan.bold);
   passport.authenticate('local', (err, user, info) => {
-    console.log('PS callback'.cyan);
-    console.log(err);
-    console.log(user);
-    console.log(info);
+    // console.log('PS callback'.cyan);
+    // console.log(err);
+    // console.log(user);
+    // console.log(info);
     if (!user) {
-      console.log('No user res'.red);
+      // console.log('No user res'.red);
       return res.status(401).json({ message: info.message });
     }
     req.logIn(user, (error) => {
       if (error) {
-        console.log('login error'.red, error);
+        // console.log('login error'.red, error);
         return next(err);
       }
       // res.redirect('/login');
@@ -102,15 +96,15 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+// --------------------------------------------------------------------------------------------------------------------
+
 // @route     GET api/auth/logout
 // @desc      Logout
 // @access    Private
 router.get('/logout', auth, (req, res) => {
   req.logout();
   req.session.destroy(() => {
-    res
-      .clearCookie('connect.sid', { path: '/' })
-      .json({ msg: 'You are logged out!' });
+    res.clearCookie('connect.sid', { path: '/' }).json({ msg: 'You are logged out!' });
   });
 });
 
