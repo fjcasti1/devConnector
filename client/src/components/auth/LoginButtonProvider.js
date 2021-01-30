@@ -1,4 +1,5 @@
 import React from 'react';
+import { Fragment } from 'react';
 
 const LoginButtonProvider = ({ provider, name = null }) => {
   let continueText = '';
@@ -19,10 +20,14 @@ const LoginButtonProvider = ({ provider, name = null }) => {
       href={`api/auth/${provider}`}
       className={`btn btn-primary login-btn login-btn-${provider}`}
     >
-      <i className={`${iconClass} fa-lg login-btn-icon`}></i>
-      <span className='login-btn-text'>
-        <span className='hide-md'>{continueText}</span> {name}
-      </span>
+      <div className='login-btn-text'>
+        <div>
+          <i className={`${iconClass} login-btn-icon`}></i>
+        </div>
+        <div>
+          {continueText} {name}
+        </div>
+      </div>
     </a>
   );
 };

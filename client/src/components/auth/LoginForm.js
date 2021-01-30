@@ -14,8 +14,7 @@ const LoginForm = () => {
 
   const { email, password } = formData;
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -49,11 +48,9 @@ const LoginForm = () => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        <input
-          type='submit'
-          className='btn btn-primary login-btn login-btn-local block'
-          value='Login'
-        />
+        <button type='submit' className='btn btn-primary login-btn login-btn-local'>
+          <span className='login-btn-text'>Login</span>
+        </button>
         <p className='login-question'>
           Don't have an account? <Link to='/register'>Register</Link>
         </p>
