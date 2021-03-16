@@ -2,4 +2,7 @@
   "extends": [
     "config:base"
   ]
+  {
+  "baseBranches": ["next"]
+}
 }
