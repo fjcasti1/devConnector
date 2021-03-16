@@ -2,5 +2,5 @@
   "extends": [
     "config:base"
   ],
-  "baseBranches": ["next"]
+  "baseBranches": ["renovate"]
 }
